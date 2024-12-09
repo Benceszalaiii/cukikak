@@ -6,11 +6,11 @@
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@/components/*": ["components/*"],
-      "@/ui/*": ["components/ui/*"],
+      "@/components/*": ["src/components/*"],
+      "@/ui/*": ["src/components/ui/*"],
       "@/pages/*": ["pages/*"],
       "@/app/*": ["app/*"],
-      "@/lib/*": ["lib/*"],
+      "@/lib/*": ["src/lib/*"],
       "@/styles/*": ["styles/*"],
       "@/auth": ["./auth.ts"],
       "@/*": ["./src/*"]

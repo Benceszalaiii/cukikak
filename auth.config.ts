@@ -1,7 +1,7 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import type { DefaultSession, NextAuthConfig } from "next-auth";
 import Google from "next-auth/providers/google";
-import prisma from "./lib/prisma";
+import prisma from "./src/lib/prisma";
 
 declare module "next-auth" {
   interface Session {
