@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["prismaSchemaFolder"]
 }
 
@@ -9,4 +9,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  admin         Boolean   @default(false)
+  role          UserRoles @default(USER)
+  accounts      Account[]
+  sessions      Session[]
+  coins         Float     @default(0)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  Order         Order[]
+  Cart          Cart?
+}
 
+enum UserRoles {
+  USER
+  TEACHER
+  PRINTER
+  CHEF
+}
