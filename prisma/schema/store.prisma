@@ -1,5 +1,45 @@
-//TODO Create invoice model and add it to the schema
+model Product {
+  id          Int         @id @default(autoincrement())
+  name        String
+  description String
+  price       Float
+  image       String
+  type        ProductType
+  Order       Order[]
+  Cart        Cart[]
+}
 
-//TODO Create product model and add it to the schema
+model Order {
+  id        Int         @id @default(autoincrement())
+  createdAt DateTime    @default(now())
+  user      User        @relation(fields: [userId], references: [id])
+  status    OrderStatus @default(UNPAID)
+  total     Float
+  products  Product[]
+  userId    String
+}
 
-//TODO Create order model and add it to the schema
+model Cart {
+  id       Int       @id @default(autoincrement())
+  user     User      @relation(fields: [userId], references: [id])
+  userId   String    @unique
+  products Product[]
+}
+
+//! NOT REFUNDABLE AFTER COLLECTED
+enum OrderStatus {
+  UNPAID // User has not paid yet
+  PROCESSING // We are working on it, need to acquire/manufacture
+  OBTAINED // 3D printed at home or whatever, ready to take to school
+  SHIPPED // In school
+  DELIVERED // Delivered to the customer
+  CANCELLED // Order was cancelled 
+  REFUNDED // Order was refunded
+}
+
+enum ProductType {
+  PRINTED
+  SUPPLIED
+  HANDMADE
+  TEACHER
+}
