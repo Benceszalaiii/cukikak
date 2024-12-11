@@ -16,8 +16,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { LogOutIcon, LucideIcon, ShoppingCartIcon, StoreIcon, User2Icon } from "lucide-react";
-import { Session } from "next-auth";
+import { User } from "@prisma/client";
+import { DatabaseIcon, LogOutIcon, LucideIcon, ShoppingCartIcon, StoreIcon, User2Icon } from "lucide-react";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
 import * as React from "react";
@@ -37,22 +37,21 @@ const items = [
   }
 ];
 
-export default function UserAvatar({ session }: { session: Session }) {
+export default function UserAvatar({ user }: { user: User }) {
   const isMobile = useIsMobile();
   const [open, setOpen] = React.useState(false);
   const redirectTo = (path: string) => {
     window.location.href = path;
     setOpen(false);
   };
-  if (!session.user.email) return null;
   if (isMobile) {
     return (
       <Drawer open={open} onOpenChange={setOpen}>
         <DrawerTrigger asChild>
           <button className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full border focus:outline-none active:scale-95  sm:h-9 sm:w-9">
             <Image
-              alt={session.user.email || "User profile picture"}
-              src={session.user.image || "/avatar.webp"}
+              alt={user.email || "User profile picture"}
+              src={user.image || "/avatar.webp"}
               width={40}
               height={40}
             />
@@ -60,12 +59,12 @@ export default function UserAvatar({ session }: { session: Session }) {
         </DrawerTrigger>
         <DrawerContent className="w-full bg-amber-500 text-black">
           <DrawerHeader>
-            <DrawerTitle>{session.user.name}</DrawerTitle>
+            <DrawerTitle>{user.name}</DrawerTitle>
           </DrawerHeader>
           <DrawerDescription className="flex w-full text-black flex-col items-start justify-start gap-1 px-2">
             <DrawerItemWithIcon
               onClick={() => {
-                redirectTo(`/user/${session.user.id}`);
+                redirectTo(`/user/${user.id}`);
               }}
               Icon={User2Icon}
             >
@@ -82,6 +81,17 @@ export default function UserAvatar({ session }: { session: Session }) {
                 {item.name}
               </DrawerItemWithIcon>
             ))}
+            {user.admin && (
+              <DrawerItemWithIcon
+                key={"Management bombombom"}
+                onClick={() => {
+                  redirectTo("/admin");
+                }}
+                Icon={DatabaseIcon}
+              >
+                Vezetőség
+              </DrawerItemWithIcon>
+            )}
             <DrawerItemWithIcon
               onClick={() => {
                 signOut();
@@ -93,7 +103,7 @@ export default function UserAvatar({ session }: { session: Session }) {
             </DrawerItemWithIcon>
           </DrawerDescription>
           <DrawerFooter className="mb-4 mt-6 text-center text-sm text-neutral-700">
-            {session.user.email}
+            {user.email}
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
@@ -104,8 +114,8 @@ export default function UserAvatar({ session }: { session: Session }) {
       <DropdownMenuTrigger asChild>
         <button className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full border focus:outline-none active:scale-95 border-red-600 sm:h-9 sm:w-9">
           <Image
-            alt={session.user.email || "User profile picture"}
-            src={session.user.image || "/avatar.webp"}
+            alt={user.email || "User profile picture"}
+            src={user.image || "/avatar.webp"}
             width={40}
             height={40}
           />
@@ -113,12 +123,12 @@ export default function UserAvatar({ session }: { session: Session }) {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48 space-y-1 border">
         <div className="p-2">
-          <h2 className="">{session.user.name}</h2>
+          <h2 className="">{user.name}</h2>
         </div>
         <DropdownMenuSeparator />
         <DropdownItemWithIcon
           onClick={() => {
-            redirectTo(`/user/${session.user.id}`);
+            redirectTo(`/user/${user.id}`);
           }}
           Icon={User2Icon}
         >
@@ -136,6 +146,15 @@ export default function UserAvatar({ session }: { session: Session }) {
             {item.name}
           </DropdownItemWithIcon>
         ))}
+        <DropdownItemWithIcon
+          key={"Management bombombom"}
+          onClick={() => {
+            redirectTo("/admin");
+          }}
+          Icon={DatabaseIcon}
+        >
+          Vezetőség
+        </DropdownItemWithIcon>
         <DropdownMenuSeparator />
         <DropdownItemWithIcon
           onClick={() => {

@@ -26,7 +26,7 @@ model Cart {
   products Product[]
 }
 
-//! NOT REFUNDABLE AFTER COLLECTED
+//! NOT REFUNDABLE AFTER PROCESSING
 enum OrderStatus {
   UNPAID // User has not paid yet
   PROCESSING // We are working on it, need to acquire/manufacture
