@@ -1,5 +1,3 @@
-# Cukikák
+A website that focuses on logistics of an online website
 
-## Good practices
-
-![Data Handling with Server actions and db.ts](data_handling.png)
+Made with Next.js, Auth.js and prisma postgres
