@@ -1,5 +1,6 @@
 import type { Config } from "tailwindcss";
 import * as tailwindcssAnimate from "tailwindcss-animate";
+import tailwindcssMotion from "tailwindcss-motion";
 export default {
   darkMode: "class",
   content: [
@@ -7,7 +8,7 @@ export default {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/lib/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}"
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
@@ -80,5 +81,5 @@ export default {
       },
     },
   },
-  plugins: [tailwindcssAnimate],
+  plugins: [tailwindcssAnimate, tailwindcssMotion],
 } satisfies Config;

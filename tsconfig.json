@@ -6,6 +6,8 @@
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@/public/*": ["public/*"],
+      "@/videos/*": ["videos/*"],
       "@/components/*": ["src/components/*"],
       "@/ui/*": ["src/components/ui/*"],
       "@/pages/*": ["pages/*"],
@@ -20,7 +22,7 @@
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "downlevelIteration": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -34,6 +36,7 @@
     ]
   },
   "include": [
+    "video.d.ts",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",

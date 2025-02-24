@@ -62,6 +62,6 @@
     @apply border-border;
   }
   body {
-    @apply bg-yellow-500 text-foreground overflow-y-auto [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 [&::-webkit-scrollbar-track]:bg-transparent dark:[&::-webkit-scrollbar-track]:bg-black [&::-webkit-scrollbar]:w-2;
+    @apply bg-neutral-950 text-foreground overflow-y-auto [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 [&::-webkit-scrollbar-track]:bg-transparent dark:[&::-webkit-scrollbar-track]:bg-black [&::-webkit-scrollbar]:w-2;
   }
 }

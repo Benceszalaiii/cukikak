@@ -40,7 +40,6 @@ export default function RootLayout({
       <body>
         <ThemeProvider attribute={"class"} forcedTheme="light">
           <main className="min-h-screen w-full">
-            <Nav />
             {children}
           </main>
         </ThemeProvider>

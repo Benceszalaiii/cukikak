@@ -1,0 +1,23 @@
+{
+  "status": "ready",
+  "originalFilePath": "videos\\interview.mp4",
+  "provider": "mux",
+  "providerMetadata": {
+    "mux": {
+      "uploadId": "cIosWTmZn7bLv4kO6KixTh3ksjY9Gc6CsfkUM4pmUJY",
+      "assetId": "02niyL34XWYEEKgO4ZIRrmo01lEqDTb0000gk2i1X1Mqeik",
+      "playbackId": "b7e2WwgsdeXpwQkqwlRpnW4KKGP01Lea009vBzpbcRdW00"
+    }
+  },
+  "createdAt": 1740400619951,
+  "updatedAt": 1740400747216,
+  "size": 49475656,
+  "sources": [
+    {
+      "src": "https://stream.mux.com/b7e2WwgsdeXpwQkqwlRpnW4KKGP01Lea009vBzpbcRdW00.m3u8",
+      "type": "application/x-mpegURL"
+    }
+  ],
+  "poster": "https://image.mux.com/b7e2WwgsdeXpwQkqwlRpnW4KKGP01Lea009vBzpbcRdW00/thumbnail.webp",
+  "blurDataURL": "data:image/webp;base64,UklGRo4AAABXRUJQVlA4IIIAAAAwAgCdASoQAAkAAQAcJZACdAYrx2lu9EF5gAD++WeIyJ12/DWIzLMT1sTse0Z4Ppu35fAR5ca/JEXkgYHrO4dWeeDJh2p+ahh43qMl/RKeJExwX9qf4S0RLq6z+kYuSiAPhfARKx7FXgPHrdR6Ct9j6XGbe6HIglNUgH3Yz/vsAAAA"
+}
