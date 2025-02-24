@@ -1,4 +1,5 @@
 import Player from "next-video/player";
+import Image from "next/image";
 import Link from "next/link";
 import playerTheme from "player.style/notflix/react";
 export default function MoviePage() {
@@ -9,7 +10,9 @@ export default function MoviePage() {
           href={"/"}
           className="text-red-600 font-netflix transition-all duration-300 hover:motion-preset-seesaw-md font-caveat font-bold text-3xl"
         >
-          11.Corleone
+          <Image width={120} height={80} src="/netflix.png" alt="11. Corleone" >
+          </Image>
+
         </Link>
       </div>
       <Player
