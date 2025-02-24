@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 import { caveat, geistMono, geistSans, inter, sfpro } from "./fonts";
 import "./globals.css";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: {
@@ -34,11 +35,12 @@ export default function RootLayout({
       <head>
         <link
           rel="icon"
-          href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎪</text></svg>"
+          href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💰</text></svg>"
         />
       </head>
       <body>
         <ThemeProvider attribute={"class"} forcedTheme="dark">
+          <Toaster />
           <main className="min-h-screen w-full selection:bg-red-600 selection:text-black">
             {children}
           </main>

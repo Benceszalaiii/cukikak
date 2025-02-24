@@ -1,1 +1,1 @@
-export {default as CreateEntry} from "./new";
+export {default as CreateEntry} from "./new"

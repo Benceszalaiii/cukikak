@@ -1,8 +1,9 @@
 "use server";
+import { UserRoles } from "@prisma/client";
 import "server-only";
 import { auth } from "./auth";
 import prisma from "./prisma";
-import { UserRoles } from "@prisma/client";
+import { getLevel } from "./utils";
 
 export async function getUser() {
   const session = await auth();
@@ -35,11 +36,41 @@ export async function addPoints(userId: string, points: number) {
   });
 }
 
-export async function getAllEntries(accessLevel: UserRoles){
-  const res = await prisma.timelineEntries.findMany({where: {access: accessLevel}})
-    return res;
+export async function getAllEntries(accessLevel: UserRoles) {
+  const processedLevel: UserRoles[] = getLevel(accessLevel);
+  const res = await prisma.timelineEntries.findMany({
+    where: { access: { in: processedLevel } },
+    include: { createdBy: { select: { image: true, name: true, role: true } }, attendants: {select: {name: true, image:true, role: true}} },
+    orderBy: { date: "desc" },
+  });
+  return res;
 }
 
+export interface EntryProps {
+  title: string;
+  description: string;
+  date: Date;
+  attendants: string[];
+  tags: string[];
+  access_level: UserRoles;
+}
+
+export async function EntryUploader(values: EntryProps, userId: string) {
+  const res = await prisma.timelineEntries.create({
+    data: {
+      access: values.access_level,
+      date: values.date,
+      description: values.description,
+      title: values.title, 
+      attendants: {
+        connect: await prisma.user.findMany({where: {id: {in: values.attendants}}})
+      },
+      tags: values.tags,
+      userId: userId
+    },
+  });
+  return res;
+}
 
 // export async function getOrderedProductsByType(type: ProductType) {
 //   const orders = await prisma.order.findMany({

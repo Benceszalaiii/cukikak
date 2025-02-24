@@ -1,3 +1,4 @@
+import { UserRoles } from "@prisma/client";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -27,5 +28,47 @@ export function nFormatter(num: number, digits?: number) {
 
 export function capitalize(str: string) {
   if (!str || typeof str !== "string") return str;
-  return str.charAt(0).toUpperCase() + str.slice(1);
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+}
+
+export function translateRole(str: UserRoles) {
+  switch (str) {
+    case "USER":
+      return "Nyilvános";
+
+    case "CLASSMATE":
+      return "Osztály";
+
+    case "STAFF":
+      return "Rendezők";
+
+    case "TEACHER":
+      return "Tanárok";
+  }
+}
+
+
+export function getLevel(accessLevel: string){
+  const processedLevel: UserRoles[] = [];
+  switch (accessLevel) {
+    case "USER":
+      processedLevel.push("USER");
+      break;
+    case "CLASSMATE":
+      processedLevel.push("USER");
+      processedLevel.push("CLASSMATE");
+      break;
+    case "STAFF":
+      processedLevel.push("USER");
+      processedLevel.push("CLASSMATE");
+      processedLevel.push("TEACHER");
+      processedLevel.push("STAFF");
+      break;
+    case "TEACHER":
+      processedLevel.push("USER");
+      processedLevel.push("CLASSMATE");
+      processedLevel.push("TEACHER");
+      break;
+  }
+  return processedLevel;
 }
