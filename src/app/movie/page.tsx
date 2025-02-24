@@ -17,7 +17,7 @@ export default function MoviePage() {
         theme={playerTheme}
         autoPlay={false}
         key="video"
-        src={"http://localhost:3000/interview.mp4"}
+        src={"http://www.cukikak.store/interview.mp4"}
       />
     </section>
   );
