@@ -2,7 +2,7 @@
 import { cx } from "class-variance-authority";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
-import { caveat, geistMono, geistSans, inter, sfpro } from "./fonts";
+import { caveat, geistMono, geistSans, inter, netflix, sfpro } from "./fonts";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 
@@ -28,6 +28,7 @@ export default function RootLayout({
         caveat.variable,
         geistMono.variable,
         geistSans.variable,
+        netflix.variable,
         "scroll-smooth subpixel-antialiased"
       )}
       suppressHydrationWarning

@@ -10,6 +10,10 @@ export const geistSans = localFont({
   variable: "--font-geist-sans",
   weight: "100 900",
 });
+export const netflix = localFont({
+  src: "./BebasNeue.otf",
+  variable: "--font-netflix"
+})
 
 export const caveat = localFont({
   src: "./Caveat.ttf",

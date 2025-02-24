@@ -7,9 +7,9 @@ export default function MoviePage() {
       <div className="fixed top-8 w-full flex justify-center">
         <Link
           href={"/"}
-          className="text-red-600 transition-all duration-300 hover:motion-preset-seesaw-md font-caveat font-semibold text-3xl"
+          className="text-red-600 font-netflix transition-all duration-300 hover:motion-preset-seesaw-md font-caveat font-bold text-3xl"
         >
-          11. Corleone
+          11.Corleone
         </Link>
       </div>
       <Player

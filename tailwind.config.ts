@@ -56,6 +56,7 @@ export default {
         caveat: "var(--font-caveat)",
         inter: "var(--font-inter)",
         sfpro: "var(--font-sfpro)",
+        netflix: "var(--font-netflix), sans-serif",
         geistmono: "var(--font-geist-mono)",
         geistsans: "var(--font-geist-sans)",
       },

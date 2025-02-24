@@ -1,6 +1,7 @@
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["prismaSchemaFolder"]
+  engineType = "library"
 }
 
 // prisma/schema.prisma
@@ -12,7 +13,7 @@ datasource db {
 model User {
   id              String            @id @default(cuid())
   name            String?
-  email           String
+  email           String            @unique
   emailVerified   DateTime?
   image           String?
   admin           Boolean           @default(false)

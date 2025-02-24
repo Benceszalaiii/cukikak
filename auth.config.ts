@@ -20,7 +20,7 @@ export default {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     }),
   ],
-  theme: { brandColor: "#e3c91e" },
+  theme: { brandColor: "#e02323" },
   callbacks: {
     session({ session, user }) {
       session.user.id = user.id;
