@@ -7,8 +7,8 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | 11 Cirkusz",
-    default: "11 Cirkusz",
+    template: "%s | 11 Corleone",
+    default: "11 Corleone",
   },
   description: "A 11C osztály kampányoldala",
 };
