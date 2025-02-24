@@ -55,7 +55,7 @@ export default function UserAvatar({ user }: { user: User }) {
     return (
       <Drawer open={open} onOpenChange={setOpen}>
         <DrawerTrigger asChild>
-          <button className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full border focus:outline-none active:scale-95 text-red-600 sm:h-9 sm:w-9">
+          <button className="flex h-8 w-8 items-center cursor-pointer justify-center overflow-hidden rounded-full border focus:outline-none active:scale-95 text-red-600 sm:h-9 sm:w-9">
             <Avatar>
               <AvatarImage src={user.image || ""}></AvatarImage>
               <AvatarFallback>{user.name && user.name[0]}</AvatarFallback>
@@ -116,7 +116,7 @@ export default function UserAvatar({ user }: { user: User }) {
   return (
     <DropdownMenu open={open} onOpenChange={setOpen} modal={false}>
       <DropdownMenuTrigger asChild>
-        <button className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full focus:outline-none active:scale-95 bg-black border-white/20 border text-red-600 sm:h-9 sm:w-9">
+        <button className="flex h-8 w-8 items-center cursor-pointer justify-center overflow-hidden rounded-full focus:outline-none active:scale-95 bg-black border-white/20 border text-red-600 sm:h-9 sm:w-9">
           <Avatar>
             <AvatarImage src={user.image || ""}></AvatarImage>
             <AvatarFallback>{user.name && user.name[0]}</AvatarFallback>
