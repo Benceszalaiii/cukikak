@@ -5,7 +5,7 @@ import UserAvatar from "./avatar";
 
 export default function Navbar({ session }: { session: User | null }) {
   return (
-    <nav className="fixed z-50 top-0 md:px-16 px-4 py-2 left-0 w-full flex flex-row items-center justify-end">
+    <nav className="fixed z-50 top-0 cursor-pointer md:px-16 px-4 py-2 left-0 w-full flex flex-row items-center justify-end">
       {/* <Link href={"/"} className="text-2xl  text-foreground font-semibold font-caveat">
         11. Corleone
       </Link> */}
