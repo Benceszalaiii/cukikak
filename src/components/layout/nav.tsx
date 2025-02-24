@@ -1,6 +1,5 @@
 "use server";
 
-import { auth } from "@/lib/auth";
 import Navbar from "./navbar";
 import { getUser } from "@/lib/db";
 
