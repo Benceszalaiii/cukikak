@@ -38,8 +38,8 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <ThemeProvider attribute={"class"} forcedTheme="light">
-          <main className="min-h-screen w-full">
+        <ThemeProvider attribute={"class"} forcedTheme="dark">
+          <main className="min-h-screen w-full selection:bg-red-600 selection:text-black">
             {children}
           </main>
         </ThemeProvider>

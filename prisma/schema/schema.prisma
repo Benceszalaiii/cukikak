@@ -10,25 +10,38 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String    @unique
-  emailVerified DateTime?
-  image         String?
-  admin         Boolean   @default(false)
-  role          UserRoles @default(USER)
-  accounts      Account[]
-  sessions      Session[]
-  coins         Float     @default(0)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  Order         Order[]
-  Cart          Cart?
+  id              String            @id @default(cuid())
+  name            String?
+  email           String            @unique
+  emailVerified   DateTime?
+  image           String?
+  admin           Boolean           @default(false)
+  role            UserRoles         @default(USER)
+  accounts        Account[]
+  sessions        Session[]
+  coins           Float             @default(0)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  TimelineEntries TimelineEntries[]
+  attendance      TimelineEntries[] @relation("Attendance")
 }
 
 enum UserRoles {
   USER
+  CLASSMATE
   TEACHER
-  PRINTER
-  CHEF
+  STAFF
+}
+
+model TimelineEntries {
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  createdBy   User      @relation(fields: [userId], references: [id])
+  userId      String
+  access      UserRoles
+  title       String
+  description String
+  tags        String[]
+  date        DateTime
+  attendants  User[]    @relation("Attendance")
 }

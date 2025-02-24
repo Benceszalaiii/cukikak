@@ -1,8 +1,8 @@
 "use server";
-import { ProductType } from "@prisma/client";
 import "server-only";
 import { auth } from "./auth";
 import prisma from "./prisma";
+import { UserRoles } from "@prisma/client";
 
 export async function getUser() {
   const session = await auth();
@@ -35,47 +35,53 @@ export async function addPoints(userId: string, points: number) {
   });
 }
 
-export async function getOrderedProductsByType(type: ProductType) {
-  const orders = await prisma.order.findMany({
-    where: { products: { some: { type: type } }, status: "PROCESSING" },
-  });
-  return orders;
+export async function getAllEntries(accessLevel: UserRoles){
+  const res = await prisma.timelineEntries.findMany({where: {access: accessLevel}})
+    return res;
 }
 
-export async function refundOrder(orderId: number) {
-  const order = await prisma.order.findUnique({ where: { id: orderId } });
-  if (!order) {
-    throw new Error("A kért rendelés nem létezik az adatbázisunkban.");
-  }
-  if (order.status === "PROCESSING" || order.status === "UNPAID") {
-    await prisma.user.update({
-      where: { id: order.userId },
-      data: {
-        coins: { increment: order.total },
-        Order: {
-          update: { where: { id: order.id }, data: { status: "REFUNDED" } },
-        },
-      },
-    });
-    return;
-  }
-  throw new Error(
-    "A rendelését már elkészítettük, sajnos nem lehet visszamondani."
-  );
-}
 
-export async function addToCart(userId: string, productId: number) {
-  const updated = await prisma.cart.update({ where: { userId: userId}, data: {products: {connect: {id: productId}}} });
-  if (!updated){
-    throw new Error("Nem sikerült a kosárhoz adni a terméket")
-  }
-  return updated;
-}
+// export async function getOrderedProductsByType(type: ProductType) {
+//   const orders = await prisma.order.findMany({
+//     where: { products: { some: { type: type } }, status: "PROCESSING" },
+//   });
+//   return orders;
+// }
 
-export async function getCart(userId: string){
-  const cart = await prisma.cart.findUnique({ where: { userId: userId } });
-  if (!cart){
-    return await prisma.cart.create({ data: { userId: userId }, include: {products: true} });
-  }
-  return cart;
-}
+// export async function refundOrder(orderId: number) {
+//   const order = await prisma.order.findUnique({ where: { id: orderId } });
+//   if (!order) {
+//     throw new Error("A kért rendelés nem létezik az adatbázisunkban.");
+//   }
+//   if (order.status === "PROCESSING" || order.status === "UNPAID") {
+//     await prisma.user.update({
+//       where: { id: order.userId },
+//       data: {
+//         coins: { increment: order.total },
+//         Order: {
+//           update: { where: { id: order.id }, data: { status: "REFUNDED" } },
+//         },
+//       },
+//     });
+//     return;
+//   }
+//   throw new Error(
+//     "A rendelését már elkészítettük, sajnos nem lehet visszamondani."
+//   );
+// }
+
+// export async function addToCart(userId: string, productId: number) {
+//   const updated = await prisma.cart.update({ where: { userId: userId}, data: {products: {connect: {id: productId}}} });
+//   if (!updated){
+//     throw new Error("Nem sikerült a kosárhoz adni a terméket")
+//   }
+//   return updated;
+// }
+
+// export async function getCart(userId: string){
+//   const cart = await prisma.cart.findUnique({ where: { userId: userId } });
+//   if (!cart){
+//     return await prisma.cart.create({ data: { userId: userId }, include: {products: true} });
+//   }
+//   return cart;
+// }

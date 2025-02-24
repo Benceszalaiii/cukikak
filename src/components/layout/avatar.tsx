@@ -17,24 +17,31 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { User } from "@prisma/client";
-import { DatabaseIcon, LogOutIcon, LucideIcon, ShoppingCartIcon, StoreIcon, User2Icon } from "lucide-react";
+import {
+  ClapperboardIcon,
+  DatabaseIcon,
+  FlagTriangleRightIcon,
+  LogOutIcon,
+  LucideIcon,
+  User2Icon,
+} from "lucide-react";
 import { signOut } from "next-auth/react";
-import Image from "next/image";
 import * as React from "react";
 import { twMerge } from "tailwind-merge";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 
 const items = [
   {
-    name: "Áruház",
-    path: "/store",
-    icon: StoreIcon,
+    name: "Események",
+    path: "/timeline",
+    icon: FlagTriangleRightIcon,
   },
   {
-    name: "Megrendelések",
-    path: "/orders",
-    icon: ShoppingCartIcon
-  }
+    name: "Kampányfilm",
+    path: "/movie",
+    icon: ClapperboardIcon,
+  },
 ];
 
 export default function UserAvatar({ user }: { user: User }) {
@@ -48,20 +55,18 @@ export default function UserAvatar({ user }: { user: User }) {
     return (
       <Drawer open={open} onOpenChange={setOpen}>
         <DrawerTrigger asChild>
-          <button className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full border focus:outline-none active:scale-95  sm:h-9 sm:w-9">
-            <Image
-              alt={user.email || "User profile picture"}
-              src={user.image || "/avatar.webp"}
-              width={40}
-              height={40}
-            />
+          <button className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full border focus:outline-none active:scale-95 text-red-600 sm:h-9 sm:w-9">
+            <Avatar>
+              <AvatarImage src={user.image || ""}></AvatarImage>
+              <AvatarFallback>{user.name && user.name[0]}</AvatarFallback>
+            </Avatar>
           </button>
         </DrawerTrigger>
-        <DrawerContent className="w-full bg-amber-500 text-black">
+        <DrawerContent className="w-full bg-black border-gray-500/25 border">
           <DrawerHeader>
             <DrawerTitle>{user.name}</DrawerTitle>
           </DrawerHeader>
-          <DrawerDescription className="flex w-full text-black flex-col items-start justify-start gap-1 px-2">
+          <DrawerDescription className="flex w-full flex-col items-start justify-start gap-1 px-2">
             <DrawerItemWithIcon
               onClick={() => {
                 redirectTo(`/user/${user.id}`);
@@ -96,7 +101,6 @@ export default function UserAvatar({ user }: { user: User }) {
               onClick={() => {
                 signOut();
               }}
-              className="text-red-700 hover:text-red-800 focus:text-red-800"
               Icon={LogOutIcon}
             >
               Kijelentkezés
@@ -112,13 +116,11 @@ export default function UserAvatar({ user }: { user: User }) {
   return (
     <DropdownMenu open={open} onOpenChange={setOpen} modal={false}>
       <DropdownMenuTrigger asChild>
-        <button className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full border focus:outline-none active:scale-95 border-red-600 sm:h-9 sm:w-9">
-          <Image
-            alt={user.email || "User profile picture"}
-            src={user.image || "/avatar.webp"}
-            width={40}
-            height={40}
-          />
+        <button className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full focus:outline-none active:scale-95 bg-black border-white/20 border text-red-600 sm:h-9 sm:w-9">
+          <Avatar>
+            <AvatarImage src={user.image || ""}></AvatarImage>
+            <AvatarFallback>{user.name && user.name[0]}</AvatarFallback>
+          </Avatar>
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48 space-y-1 border">
@@ -141,7 +143,6 @@ export default function UserAvatar({ user }: { user: User }) {
               redirectTo(item.path);
             }}
             Icon={item.icon}
-            className="focus:bg-amber-600"
           >
             {item.name}
           </DropdownItemWithIcon>
@@ -160,7 +161,6 @@ export default function UserAvatar({ user }: { user: User }) {
           onClick={() => {
             signOut();
           }}
-          className="text-red-700 focus:text-red-600"
           Icon={LogOutIcon}
         >
           Kijelentkezés
@@ -174,19 +174,16 @@ const DropdownItemWithIcon = ({
   children,
   Icon,
   onClick,
-  className,
 }: {
   children: React.ReactNode;
   Icon: LucideIcon;
-  className?: string;
   onClick?: () => void;
 }) => {
   return (
     <DropdownMenuItem
       onClick={onClick}
       className={twMerge(
-        "flex hover:bg-amber-600 cursor-pointer flex-row items-center gap-4 text-black",
-        className
+        "flex cursor-pointer flex-row items-center gap-4 text-white"
       )}
     >
       <Icon className="ml-2 h-4 w-4" />
@@ -197,22 +194,17 @@ const DropdownItemWithIcon = ({
 
 const DrawerItemWithIcon = ({
   children,
-  className,
   Icon,
   onClick,
 }: {
   children: React.ReactNode;
-  className?: string;
   Icon: LucideIcon;
   onClick?: () => void;
 }) => {
   return (
     <Button
       onClick={onClick}
-      className={twMerge(
-        "flex w-full hover:bg-amber-600 cursor-pointer justify-start gap-4",
-        className
-      )}
+      className="flex w-full hover:bg-neutral-900/50 hover:text-red-600 cursor-pointer justify-start gap-4 text-white"
       variant={"ghost"}
     >
       <Icon className="h-4 w-4" />
