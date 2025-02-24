@@ -22,7 +22,7 @@ export const AvatarCircles = ({
   return (
 
       <div
-        className={cn("z-10 cursor-pointer flex -space-x-4 rtl:space-x-reverse", className)}
+        className={cn("z-10  cursor-pointer flex -space-x-4 rtl:space-x-reverse", className)}
       >
         {avatarUrls.map((avatar, index) => (
           <Tooltip  key={index}>

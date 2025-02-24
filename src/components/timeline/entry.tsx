@@ -38,7 +38,7 @@ export default function Entry({ data }: { data: TimelinePropWithUserData }) {
           );
         })}
       </div>
-      <div className="col-span-1">
+      <div className="col-span-1 w-full justify-end flex">
         <AttendanceDialog users={data} />
       </div>
       <div className="col-span-2 tracking-wider text-neutral-400">{data.description.toUpperCase()}</div>
