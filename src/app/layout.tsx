@@ -1,4 +1,4 @@
-import Nav from "@/components/layout/nav";
+
 import { cx } from "class-variance-authority";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
