@@ -7,7 +7,7 @@ import AttendanceDialog from "./attend-dialog";
 export default function Entry({ data }: { data: TimelinePropWithUserData }) {
   const creator = data.createdBy;
   return (
-    <article className="lg:grid flex flex-col gap-4 grid-cols-1 place-items-start lg:grid-cols-2 grid-flow-col lg:grid-flow-row">
+    <article className="xl:grid flex flex-col gap-4 grid-cols-1 place-items-start xl:grid-cols-2 grid-flow-col xl:grid-flow-row">
       {
         //* SECTION FOR TITLE AND CREATOR
       }
@@ -15,14 +15,14 @@ export default function Entry({ data }: { data: TimelinePropWithUserData }) {
         <p>{data.title}</p>
       </div>
       <div className=" pl-4 text-neutral-300 w-full justify-end items-center gap-2 flex">
-        <h3 className="text-right truncate lg:text-lg font-semibold">
+        <h3 className="text-right truncate xl:text-lg font-semibold">
           {creator.name}
         </h3>
-        <Avatar className="size-4 lg:size-8">
+        <Avatar className="size-4 xl:size-8">
           <AvatarImage src={creator.image || ""}></AvatarImage>
           <AvatarFallback>{creator.name && creator.name[0]}</AvatarFallback>
         </Avatar>
-        <p className="text-neutral-400 lg:text-base text-sm">
+        <p className="text-neutral-400 xl:text-base text-sm">
           {translateRole(data.access)}
         </p>
       </div>

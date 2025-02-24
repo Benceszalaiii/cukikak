@@ -36,3 +36,13 @@ export async function uploadEntry(values: EntryProps){
         EntryUploader(values, session.id);
     }
 }
+
+
+//! Debug part, leave commented out
+
+// export async function deleteUserByCuid(cuid: string){
+//     const session = await getUser();
+//     if (session && session.role === "STAFF"){
+//         return await deleteUser(cuid);
+//     }
+// }

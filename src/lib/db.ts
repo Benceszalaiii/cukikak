@@ -116,3 +116,15 @@ export async function EntryUploader(values: EntryProps, userId: string) {
 //   }
 //   return cart;
 // }
+
+
+
+//! Restricted debug only stuff
+//? Keep commented out at all costs. Otherwise immediate death may occur.
+// export async function deleteUser(cuid: string){
+//   try{
+//     await prisma.user.delete({where: {id: cuid}})
+//   }catch(e){
+//     console.log(e.stack);
+//   }
+// }
