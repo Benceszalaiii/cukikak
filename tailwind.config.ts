@@ -67,8 +67,19 @@ export default {
       },
       animation: {
         ripple: "ripple var(--duration,3s) ease calc(var(--i, 0)*.2s) infinite",
+        shine: "shine 5s linear infinite",
+        gradient: "gradient 8s linear infinite",
       },
       keyframes: {
+        shine: {
+          "0%": { "background-position": "100%" },
+          "100%": { "background-position": "-100%" },
+        },
+        gradient: {
+          to: {
+            backgroundPosition: "var(--bg-size) 0",
+          },
+        },
         ripple: {
           "0%, 100%": {
             transform: "translate(-50%, -50%) scale(1)",

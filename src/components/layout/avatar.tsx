@@ -30,6 +30,7 @@ import * as React from "react";
 import { twMerge } from "tailwind-merge";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
+import { AnimatedGradientText } from '../magicui/animated-gradient-text';
 
 const items = [
   {
@@ -55,12 +56,14 @@ export default function UserAvatar({ user }: { user: User }) {
     return (
       <Drawer open={open} onOpenChange={setOpen}>
         <DrawerTrigger asChild>
+        <AnimatedGradientText className="p-0 items-end mx-0 justify-end flex w-full">
           <button className="flex h-8 w-8 items-center cursor-pointer justify-center overflow-hidden rounded-full border focus:outline-none active:scale-95 text-red-600 sm:h-9 sm:w-9">
             <Avatar>
               <AvatarImage src={user.image || ""}></AvatarImage>
               <AvatarFallback>{user.name && user.name[0]}</AvatarFallback>
             </Avatar>
           </button>
+          </AnimatedGradientText>
         </DrawerTrigger>
         <DrawerContent className="w-full bg-black border-gray-500/25 border">
           <DrawerHeader>
@@ -116,12 +119,15 @@ export default function UserAvatar({ user }: { user: User }) {
   return (
     <DropdownMenu open={open} onOpenChange={setOpen} modal={false}>
       <DropdownMenuTrigger asChild>
+
+        <AnimatedGradientText className="p-0 items-end mx-0 justify-end flex w-full">
         <button className="flex h-8 w-8 items-center cursor-pointer justify-center overflow-hidden rounded-full focus:outline-none active:scale-95 bg-black border-white/20 border text-red-600 sm:h-9 sm:w-9">
           <Avatar>
             <AvatarImage src={user.image || ""}></AvatarImage>
             <AvatarFallback>{user.name && user.name[0]}</AvatarFallback>
           </Avatar>
         </button>
+        </AnimatedGradientText>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48 space-y-1 border">
         <div className="p-2">

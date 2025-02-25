@@ -1,5 +1,6 @@
 import { auth, signIn } from "@/lib/auth";
-import { Button } from "./ui/button";
+import ShinyText from "./bits/shiny";
+import { AnimatedGradientText } from './magicui/animated-gradient-text';
 
 export default async function SignInButton() {
   const session = await auth();
@@ -13,7 +14,11 @@ export default async function SignInButton() {
         await signIn("google");
       }}
     >
-      <Button type="submit">Sign in</Button>
+      <button type="submit">
+      <AnimatedGradientText className="cursor-pointer">
+      <ShinyText text="Bejelentkezés"></ShinyText>
+      </AnimatedGradientText>
+      </button>
     </form>
   );
 }

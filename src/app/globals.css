@@ -79,3 +79,13 @@
     @apply bg-background text-foreground;
   }
 }
+
+@theme inline {
+  --animate-gradient: gradient 8s linear infinite;
+
+  @keyframes gradient {
+    to {
+      backgroundPosition: var(--bg-size) 0;
+    }
+  }
+}
