@@ -11,11 +11,14 @@ export default function Entry({ data }: { data: TimelinePropWithUserData }) {
       {
         //* SECTION FOR TITLE AND CREATOR
       }
-      <div className=" text-start flex  font-semibold text-neutral-50 tracking-wider text-5xl">
-        <p>{data.title}</p>
+      <div className=" text-start truncate max-w-full flex  font-semibold text-neutral-50 tracking-wider text-5xl">
+        <h3 title={data.title}>{data.title}</h3>
       </div>
       <div className=" pl-4 text-neutral-300 w-full justify-end items-center gap-2 flex">
-        <h3 className="text-right truncate xl:text-lg font-semibold">
+        <h3
+          title={creator.name || "Creator has no name"}
+          className="text-right truncate xl:text-lg font-semibold"
+        >
           {creator.name}
         </h3>
         <Avatar className="size-4 xl:size-8">
@@ -41,7 +44,9 @@ export default function Entry({ data }: { data: TimelinePropWithUserData }) {
       <div className="col-span-1 w-full justify-end flex">
         <AttendanceDialog users={data} />
       </div>
-      <div className="col-span-2 tracking-wider text-neutral-400">{data.description.toUpperCase()}</div>
+      <div className="col-span-2 tracking-wider text-neutral-400">
+        {data.description.toUpperCase()}
+      </div>
     </article>
   );
 }

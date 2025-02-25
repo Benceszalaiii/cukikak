@@ -40,7 +40,10 @@ export async function getAllEntries(accessLevel: UserRoles) {
   const processedLevel: UserRoles[] = getLevel(accessLevel);
   const res = await prisma.timelineEntries.findMany({
     where: { access: { in: processedLevel } },
-    include: { createdBy: { select: { image: true, name: true, role: true } }, attendants: {select: {name: true, image:true, role: true}} },
+    include: {
+      createdBy: { select: { image: true, name: true, role: true, id: true } },
+      attendants: { select: { name: true, image: true, role: true, id: true } },
+    },
     orderBy: { date: "desc" },
   });
   return res;
@@ -61,12 +64,14 @@ export async function EntryUploader(values: EntryProps, userId: string) {
       access: values.access_level,
       date: values.date,
       description: values.description,
-      title: values.title, 
+      title: values.title,
       attendants: {
-        connect: await prisma.user.findMany({where: {id: {in: values.attendants}}})
+        connect: await prisma.user.findMany({
+          where: { id: { in: values.attendants } },
+        }),
       },
       tags: values.tags,
-      userId: userId
+      userId: userId,
     },
   });
   return res;
@@ -116,8 +121,6 @@ export async function EntryUploader(values: EntryProps, userId: string) {
 //   }
 //   return cart;
 // }
-
-
 
 //! Restricted debug only stuff
 //? Keep commented out at all costs. Otherwise immediate death may occur.

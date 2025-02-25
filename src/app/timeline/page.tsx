@@ -8,12 +8,14 @@ import { getEntries } from "./actions";
 
 export type TimelinePropWithUserData = {
   createdBy: {
+    id: string;
     name: string | null;
     image: string | null;
     role: UserRoles;
   };
 } & {
   attendants: {
+    id: string;
     name: string | null;
     image: string | null;
     role: UserRoles;
@@ -42,8 +44,7 @@ export default async function Page() {
           11.Corleone
         </Link>
       </div>
-      {/* <DbTester /> */}
-      <Timeline data={data} canAdd={user?.role === "STAFF"}></Timeline>
+      <Timeline data={data} userId={user?.id} canAdd={user?.role === "STAFF"}></Timeline>
     </>
   );
 }

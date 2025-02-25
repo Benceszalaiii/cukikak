@@ -2,7 +2,6 @@
 import { uploadEntry } from "@/app/timeline/actions";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import { hu } from "date-fns/locale"
 import {
   Form,
   FormControl,
@@ -40,10 +39,19 @@ import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { User, UserRoles } from "@prisma/client";
 import { format } from "date-fns";
+import { hu } from "date-fns/locale";
 import { Calendar as CalendarIcon } from "lucide-react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
+import { ShinyButton } from "./submit-button";
+export enum FormStatus {
+  UNSUBMITTED,
+  PENDING,
+  SUCCESS,
+  ERROR,
+}
 
 const formSchema = z.object({
   title: z.string().min(2).max(16),
@@ -64,6 +72,7 @@ export default function NewEntryForm({ users }: { users: User[] }) {
     },
   });
 
+  const [submitted, SetSubmitted] = useState<boolean>(false);
   function onSubmit(values: z.infer<typeof formSchema>) {
     const data: EntryProps = {
       access_level: values.access_level as UserRoles,
@@ -73,11 +82,20 @@ export default function NewEntryForm({ users }: { users: User[] }) {
       tags: values.tags || [],
       title: values.title,
     };
-    toast.promise(uploadEntry(data), {
-      loading: "Esemény feltöltése folyamatban",
-      success: "Esemény sikeresen feltöltve",
-      error: "Hiba történt az esemény feltöltése során",
-    });
+    SetSubmitted(true);
+    uploadEntry(data).then(()=> {
+      setTimeout(() => {
+        SetSubmitted(false);
+        toast.success("Esemény létrehozva");
+        form.reset();
+      }, 3500);
+    })
+      .catch((e) => {
+        toast.error("Hiba történt az esemény létrehozása során: " + e);
+        SetSubmitted(false);
+      })
+      .finally(() => {
+      });
   }
 
   return (
@@ -127,7 +145,7 @@ export default function NewEntryForm({ users }: { users: User[] }) {
                           )}
                         >
                           {field.value ? (
-                            format(field.value, "PPP", {locale: hu})
+                            format(field.value, "PPP", { locale: hu })
                           ) : (
                             <span>Válassz időpontot</span>
                           )}
@@ -254,7 +272,7 @@ export default function NewEntryForm({ users }: { users: User[] }) {
             </FormItem>
           )}
         />
-        <Button type="submit">Létrehozás</Button>
+        <ShinyButton submitted={submitted}>Létrehozás</ShinyButton>
       </form>
     </Form>
   );

@@ -8,6 +8,9 @@ export default {
     "./src/lib/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  plugins: [
+    addVariablesForColors,
+  ],
   theme: {
     extend: {
       colors: {
@@ -92,3 +95,15 @@ export default {
     },
   },
 } satisfies Config;
+import { default as flattenColorPalette } from "tailwindcss/lib/util/flattenColorPalette";
+ 
+function addVariablesForColors({ addBase, theme }: any) {return;
+  let allColors = flattenColorPalette(theme("colors"));
+  let newVars = Object.fromEntries(
+    Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
+  );
+ 
+  addBase({
+    ":root": newVars,
+  });
+}

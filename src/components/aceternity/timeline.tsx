@@ -4,17 +4,22 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import React, { useEffect, useRef, useState } from "react";
 import { CreateEntry } from "../timeline";
 import Entry from "../timeline/entry";
+import { CheckCheckIcon } from "lucide-react";
+import { twMerge } from "tailwind-merge";
 
 export interface TimelineEntryProps {
   title: string;
+  attendantsIds: string[];
   description: React.ReactNode;
 }
 
 export const Timeline = ({
   data,
   canAdd,
+  userId,
 }: {
   data: TimelinePropWithUserData[];
+  userId: string | undefined;
   canAdd: boolean;
 }) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -27,13 +32,14 @@ export const Timeline = ({
       setHeight(rect.height);
     }
   }, [ref]);
-  const entries: TimelineEntryProps[] = data.map((entry) => {
+  const originalEntries: TimelineEntryProps[] = data.map((entry) => {
     return {
       title: entry.date.toLocaleDateString("hu-HU", {
         year: "numeric",
         month: "short",
         day: "2-digit",
       }),
+      attendantsIds: entry.attendants.map((attendant) => attendant.id),
       description: <Entry data={entry}></Entry>,
     };
   });
@@ -41,10 +47,20 @@ export const Timeline = ({
     target: containerRef,
     offset: ["start 10%", "end 50%"],
   });
-
   const heightTransform = useTransform(scrollYProgress, [0, 1], [0, height]);
   const opacityTransform = useTransform(scrollYProgress, [0, 0.1], [0, 1]);
+  const [filtered, SetFiltered] = useState(false);
+  const [entries, SetEntries] = useState(originalEntries);
 
+  useEffect(()=> {
+    if (filtered) {
+      SetEntries(originalEntries.filter((entry) => entry.attendantsIds.some((attendant) => attendant === userId)));
+    } else {
+      SetEntries(originalEntries);
+    }
+    // Kedves eslint, en jobban ertem mint te, ugyhogy ne szolj bele a munkamba te kis szemet geci fasz buzi  //?(Ez az egesz sor copilot altal generalt)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filtered])
   return (
     <div
       className="w-full bg-white font-geistmono dark:bg-neutral-950 md:px-10"
@@ -59,6 +75,13 @@ export const Timeline = ({
           és az előkészületek dátumát.
         </p>
       </div>
+        {userId && (
+          <button onClick={()=> {
+            SetFiltered(!filtered);
+          }} className="underline w-full h-4 text-end items-center pr-24 justify-end text-sm text-red-700 flex flex-row gap-2 hover:text-red-500 underline-offset-2 hover:underline-offset-4 transition-all duration-300 font-semibold ">
+            {filtered && <CheckCheckIcon className="transition-all duration-300 motion-preset-blur-left-md" />} Csak azokat az eseményeket mutassa, ahol résztvevő vagyok 
+          </button>
+        )}
 
       <div ref={ref} className="relative max-w-7xl mx-auto pb-20">
         {canAdd && <CreateEntry />}
@@ -96,7 +119,7 @@ export const Timeline = ({
               height: heightTransform,
               opacity: opacityTransform,
             }}
-            className="absolute inset-x-0 top-0 w-[2px] bg-gradient-to-t from-transparent via-red-600 to-transparent from-[0%] via-[20%] rounded-full"
+            className={twMerge("absolute inset-x-0 top-0 w-[2px] bg-gradient-to-t from-transparent  to-transparent from-[0%] via-[20%] rounded-full", filtered ? "via-emerald-600" : "via-red-600")}
           />
         </div>
       </div>
