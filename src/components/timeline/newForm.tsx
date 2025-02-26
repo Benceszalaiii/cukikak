@@ -83,17 +83,18 @@ export default function NewEntryForm({ users }: { users: User[] }) {
       title: values.title,
     };
     SetSubmitted(true);
-    uploadEntry(data).then(() => {
-      setTimeout(() => {
-        SetSubmitted(false);
-        toast.success("Esemény létrehozva");
-        form.reset();
-      }, 3500);
-    })
+    uploadEntry(data)
+      .then(() => {
+        setTimeout(() => {
+          SetSubmitted(false);
+          toast.success("Esemény létrehozva");
+          form.reset();
+        }, 3500);
+      })
       .catch((e) => {
         toast.error("Hiba történt az esemény létrehozása során: " + e);
         SetSubmitted(false);
-      })
+      });
   }
 
   return (
@@ -177,7 +178,7 @@ export default function NewEntryForm({ users }: { users: User[] }) {
               <FormLabel>Címkék</FormLabel>
               <FormControl>
                 <TagsInput
-                className="bg-black"
+                  className="bg-black"
                   value={field.value as string[]}
                   onValueChange={field.onChange}
                   placeholder="Címkék hozzáadása"
@@ -247,12 +248,12 @@ export default function NewEntryForm({ users }: { users: User[] }) {
                   className=""
                 >
                   <MultiSelectorTrigger
-                  className="bg-black"
+                    className="bg-black"
                     nameValueMapping={users.map((user) => {
                       return { value: user.id, name: user.name || "No Name" };
                     })}
                   >
-                    <MultiSelectorInput  placeholder="Válassz résztvevőket" />
+                    <MultiSelectorInput placeholder="Válassz résztvevőket" />
                   </MultiSelectorTrigger>
                   <MultiSelectorContent>
                     <MultiSelectorList>
@@ -272,7 +273,9 @@ export default function NewEntryForm({ users }: { users: User[] }) {
             </FormItem>
           )}
         />
-        <ShinyButton submitted={submitted}>Létrehozás</ShinyButton>
+        <ShinyButton type="submit" submitted={submitted}>
+          Létrehozás
+        </ShinyButton>
       </form>
     </Form>
   );
