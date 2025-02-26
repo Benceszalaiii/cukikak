@@ -5,6 +5,31 @@ import { auth } from "./auth";
 import prisma from "./prisma";
 import { getLevel } from "./utils";
 
+export async function getUserWithQuizSubmission(userId?: string) {
+  if (userId) {
+    const res = await prisma.user.findUnique({
+      where: { id: userId },
+      include: {
+        questions: true,
+        Class: true,
+      },
+    });
+    return res;
+  }
+  const session = await auth();
+  if (!session) {
+    return null;
+  }
+  const res = await prisma.user.findUnique({
+    where: { id: session.user.id },
+    include: {
+      questions: true,
+      Class: true,
+    },
+  });
+  return res;
+}
+
 export async function getUser() {
   const session = await auth();
   if (!session) {

@@ -20,6 +20,9 @@ export default {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     }),
   ],
+  pages: {
+    signIn: "/login"
+  },
   theme: { brandColor: "#e02323" },
   callbacks: {
     session({ session, user }) {

@@ -16,10 +16,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { cn } from "@/lib/utils";
 import { User } from "@prisma/client";
 import {
   ClapperboardIcon,
   DatabaseIcon,
+  FilePlusIcon,
   FlagTriangleRightIcon,
   LogOutIcon,
   LucideIcon,
@@ -28,9 +30,9 @@ import {
 import { signOut } from "next-auth/react";
 import * as React from "react";
 import { twMerge } from "tailwind-merge";
+import { AnimatedGradientText } from "../magicui/animated-gradient-text";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
-import { AnimatedGradientText } from '../magicui/animated-gradient-text';
 
 const items = [
   {
@@ -44,8 +46,23 @@ const items = [
     icon: ClapperboardIcon,
   },
 ];
+const classmateItems = [
+  {
+    name: "Kvízfeltöltés",
+    path: "/upload",
+    icon: FilePlusIcon,
+  },
+];
 
-export default function UserAvatar({ user }: { user: User }) {
+export default function UserAvatar({
+  user,
+  classmate,
+  className,
+}: {
+  user: User;
+  classmate?: boolean;
+  className?: string;
+}) {
   const isMobile = useIsMobile();
   const [open, setOpen] = React.useState(false);
   const redirectTo = (path: string) => {
@@ -56,13 +73,18 @@ export default function UserAvatar({ user }: { user: User }) {
     return (
       <Drawer open={open} onOpenChange={setOpen}>
         <DrawerTrigger asChild>
-        <AnimatedGradientText className="p-0 items-end mx-0 justify-end flex w-full">
-          <button className="flex h-8 w-8 items-center cursor-pointer justify-center overflow-hidden rounded-full border focus:outline-none active:scale-95 text-red-600 sm:h-9 sm:w-9">
-            <Avatar>
-              <AvatarImage src={user.image || ""}></AvatarImage>
-              <AvatarFallback>{user.name && user.name[0]}</AvatarFallback>
-            </Avatar>
-          </button>
+          <AnimatedGradientText className="p-0 items-end mx-0 justify-end flex w-full">
+            <button
+              className={cn(
+                "flex h-8 w-8 items-center cursor-pointer justify-center overflow-hidden rounded-full border focus:outline-none active:scale-95 text-red-600 sm:h-9 sm:w-9",
+                className
+              )}
+            >
+              <Avatar>
+                <AvatarImage src={user.image || ""}></AvatarImage>
+                <AvatarFallback>{user.name && user.name[0]}</AvatarFallback>
+              </Avatar>
+            </button>
           </AnimatedGradientText>
         </DrawerTrigger>
         <DrawerContent className="w-full bg-black border-gray-500/25 border">
@@ -89,6 +111,18 @@ export default function UserAvatar({ user }: { user: User }) {
                 {item.name}
               </DrawerItemWithIcon>
             ))}
+            {classmate &&
+              classmateItems.map((item) => (
+                <DrawerItemWithIcon
+                  key={item.name}
+                  onClick={() => {
+                    redirectTo(item.path);
+                  }}
+                  Icon={item.icon}
+                >
+                  {item.name}
+                </DrawerItemWithIcon>
+              ))}
             {user.admin && (
               <DrawerItemWithIcon
                 key={"Management bombombom"}
@@ -119,14 +153,18 @@ export default function UserAvatar({ user }: { user: User }) {
   return (
     <DropdownMenu open={open} onOpenChange={setOpen} modal={false}>
       <DropdownMenuTrigger asChild>
-
         <AnimatedGradientText className="p-0 items-end mx-0 justify-end flex w-full">
-        <button className="flex h-8 w-8 items-center cursor-pointer justify-center overflow-hidden rounded-full focus:outline-none active:scale-95 bg-black border-white/20 border text-red-600 sm:h-9 sm:w-9">
-          <Avatar>
-            <AvatarImage src={user.image || ""}></AvatarImage>
-            <AvatarFallback>{user.name && user.name[0]}</AvatarFallback>
-          </Avatar>
-        </button>
+          <button
+            className={cn(
+              "flex h-8 w-8 items-center cursor-pointer justify-center overflow-hidden rounded-full border focus:outline-none active:scale-95 text-red-600 sm:h-9 sm:w-9",
+              className
+            )}
+          >
+            <Avatar>
+              <AvatarImage src={user.image || ""}></AvatarImage>
+              <AvatarFallback>{user.name && user.name[0]}</AvatarFallback>
+            </Avatar>
+          </button>
         </AnimatedGradientText>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48 space-y-1 border">
@@ -153,6 +191,18 @@ export default function UserAvatar({ user }: { user: User }) {
             {item.name}
           </DropdownItemWithIcon>
         ))}
+        {classmate &&
+          classmateItems.map((item) => (
+            <DropdownItemWithIcon
+              key={item.name}
+              onClick={() => {
+                redirectTo(item.path);
+              }}
+              Icon={item.icon}
+            >
+              {item.name}
+            </DropdownItemWithIcon>
+          ))}
         <DropdownItemWithIcon
           key={"Management bombombom"}
           onClick={() => {

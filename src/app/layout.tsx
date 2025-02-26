@@ -5,6 +5,7 @@ import { ThemeProvider } from "next-themes";
 import { caveat, geistMono, geistSans, inter, netflix, sfpro } from "./fonts";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: {
@@ -45,6 +46,7 @@ export default function RootLayout({
           <main className="min-h-screen w-full bg-black selection:bg-red-600 selection:text-black">
             {children}
           </main>
+          <footer className="bg-black px-4 text-center flex flex-col items-center justify-center font-geistmono tracking-wider gap-2 py-4 border-t"><p>Az oldalt készítette <Link draggable={false} className="underline cursor-pointer underline-offset-2 font-semibold font-caveat tracking-widest" href={"https://www.benceszalai.me"}>Szalai Bence</Link></p><p className="text-sm text-gray-100">Tech stack: <span>Next.js, React, Prisma, TailwindCSS</span></p></footer>
         </ThemeProvider>
       </body>
     </html>
