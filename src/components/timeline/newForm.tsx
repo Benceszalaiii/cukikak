@@ -94,8 +94,6 @@ export default function NewEntryForm({ users }: { users: User[] }) {
         toast.error("Hiba történt az esemény létrehozása során: " + e);
         SetSubmitted(false);
       })
-      .finally(() => {
-      });
   }
 
   return (
