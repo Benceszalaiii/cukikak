@@ -39,7 +39,7 @@ export default async function Page() {
       <div className="flex fixed items-center w-full z-10 top-4 text-red-600 justify-center">
         <Link
           href={"/"}
-          className="duration-700 ease-out font-caveat text-3xl font-semibold transition-all hover:motion-preset-stretch-md"
+          className="duration-500 ease-in-out font-geistmono motion-loop-once text-3xl font-semibold transition-all hover:motion-preset-stretch-md"
         >
           11.Corleone
         </Link>

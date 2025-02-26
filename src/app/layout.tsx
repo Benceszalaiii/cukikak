@@ -42,7 +42,7 @@ export default function RootLayout({
       <body>
         <ThemeProvider attribute={"class"} forcedTheme="dark">
           <Toaster />
-          <main className="min-h-screen w-full selection:bg-red-600 selection:text-black">
+          <main className="min-h-screen w-full bg-black selection:bg-red-600 selection:text-black">
             {children}
           </main>
         </ThemeProvider>

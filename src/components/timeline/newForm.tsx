@@ -138,7 +138,7 @@ export default function NewEntryForm({ users }: { users: User[] }) {
                         <Button
                           variant={"outline"}
                           className={cn(
-                            "w-[240px] pl-3 text-left font-normal",
+                            "w-[240px] pl-3 text-left ring-0  bg-black font-normal",
                             !field.value && "text-muted-foreground"
                           )}
                         >
@@ -177,6 +177,7 @@ export default function NewEntryForm({ users }: { users: User[] }) {
               <FormLabel>Címkék</FormLabel>
               <FormControl>
                 <TagsInput
+                className="bg-black"
                   value={field.value as string[]}
                   onValueChange={field.onChange}
                   placeholder="Címkék hozzáadása"
@@ -246,11 +247,12 @@ export default function NewEntryForm({ users }: { users: User[] }) {
                   className=""
                 >
                   <MultiSelectorTrigger
+                  className="bg-black"
                     nameValueMapping={users.map((user) => {
                       return { value: user.id, name: user.name || "No Name" };
                     })}
                   >
-                    <MultiSelectorInput placeholder="Válassz résztvevőket" />
+                    <MultiSelectorInput  placeholder="Válassz résztvevőket" />
                   </MultiSelectorTrigger>
                   <MultiSelectorContent>
                     <MultiSelectorList>
