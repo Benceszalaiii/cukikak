@@ -5,6 +5,17 @@ import { auth } from "./auth";
 import prisma from "./prisma";
 import { getLevel } from "./utils";
 
+export async function addToClass(userId: string) {
+  await prisma.user.update({
+    where: { id: userId },
+    data: { role: UserRoles.CLASSMATE },
+  });
+  await prisma.class.update({
+    where: { id: 1 },
+    data: { users: { connect: { id: userId } } },
+  });
+}
+
 export async function getUserWithQuizSubmission(userId?: string) {
   if (userId) {
     const res = await prisma.user.findUnique({
