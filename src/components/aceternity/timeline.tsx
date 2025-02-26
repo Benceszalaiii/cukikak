@@ -25,7 +25,8 @@ export const Timeline = ({
   const ref = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState(0);
-
+  
+  const [filtered, SetFiltered] = useState(false);
   useEffect(() => {
     if (ref.current) {
       const rect = ref.current.getBoundingClientRect();
@@ -47,9 +48,8 @@ export const Timeline = ({
     target: containerRef,
     offset: ["start 10%", "end 50%"],
   });
-  const heightTransform = useTransform(scrollYProgress, [0, 1], [0, height]);
+  const heightTransform =  useTransform(scrollYProgress, [0, 1], [0, height]);
   const opacityTransform = useTransform(scrollYProgress, [0, 0.1], [0, 1]);
-  const [filtered, SetFiltered] = useState(false);
   const [entries, SetEntries] = useState(originalEntries);
 
   useEffect(()=> {
@@ -63,7 +63,7 @@ export const Timeline = ({
   }, [filtered])
   return (
     <div
-      className="w-full bg-white font-geistmono dark:bg-neutral-950 md:px-10"
+      className="w-full overflow-y-hidden bg-white h-fit font-geistmono dark:bg-neutral-950 md:px-10"
       ref={containerRef}
     >
       <div className="max-w-7xl mx-auto py-20 px-4 md:px-8 lg:px-10">

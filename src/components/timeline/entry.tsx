@@ -35,7 +35,7 @@ export default function Entry({ data }: { data: TimelinePropWithUserData }) {
       <div className="col-span-1">
         {data.tags.map((item) => {
           return (
-            <Badge variant={"outline"} key={item}>
+            <Badge title={item} className="cursor-default" variant={"outline"} key={item}>
               {item}
             </Badge>
           );

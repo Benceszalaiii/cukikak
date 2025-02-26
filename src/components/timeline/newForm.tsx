@@ -83,7 +83,7 @@ export default function NewEntryForm({ users }: { users: User[] }) {
       title: values.title,
     };
     SetSubmitted(true);
-    uploadEntry(data).then(()=> {
+    uploadEntry(data).then(() => {
       setTimeout(() => {
         SetSubmitted(false);
         toast.success("Esemény létrehozva");
