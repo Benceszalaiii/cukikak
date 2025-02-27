@@ -6,12 +6,25 @@ import prisma from "./prisma";
 import { getLevel } from "./utils";
 
 export async function addToClass(userId: string) {
-  await prisma.user.update({
-    where: { id: userId },
-    data: { role: UserRoles.CLASSMATE },
+  const user = await getUser();
+  const isClassmate = user?.name?.includes("11C_");
+  if (isClassmate) {
+    await prisma.user.update({
+      where: { id: userId },
+      data: { role: UserRoles.CLASSMATE },
+    });
+  }
+  const className =
+    (await prisma.class.findMany()).filter(
+      (x) =>
+        x.shortTerm ===
+        (user?.name?.split(" ").filter((y) => y.includes("_")) || "noClass")
+    )[0].shortTerm || "noClass";
+  const classToUpdate = await prisma.class.findFirst({
+    where: { shortTerm: className },
   });
   await prisma.class.update({
-    where: { id: 1 },
+    where: { shortTerm: className, id: classToUpdate?.id },
     data: { users: { connect: { id: userId } } },
   });
 }

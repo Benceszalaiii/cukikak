@@ -64,8 +64,9 @@ model Questions {
 }
 
 model Class {
-  id        Int    @id @default(autoincrement())
+  id        Int     @id @default(autoincrement())
   name      String
   users     User[]
-  teacherid String
+  teacherid String?
+  shortTerm String?
 }

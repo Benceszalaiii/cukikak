@@ -7,8 +7,7 @@ export async function GET() {
   const session = await getUser();
   if (session) {
     if (
-      session.email.includes("@students.jedlik.eu") &&
-      session.name?.includes("11C_")
+      session.email.includes("@students.jedlik.eu")
     ) {
       await addToClass(session.id);
     }
