@@ -22,7 +22,7 @@ export default {
   ],
   pages: {
     signIn: "/login",
-    newUesr: "/api/newUser"
+    newUser: "/api/newUser"
   },
   theme: { brandColor: "#e02323" },
   callbacks: {
