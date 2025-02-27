@@ -21,7 +21,8 @@ export default {
     }),
   ],
   pages: {
-    signIn: "/login"
+    signIn: "/login",
+    newUesr: "/api/newUser"
   },
   theme: { brandColor: "#e02323" },
   callbacks: {
