@@ -23,10 +23,13 @@ export async function addToClass(userId: string) {
   const classToUpdate = await prisma.class.findFirst({
     where: { shortTerm: className },
   });
-  await prisma.class.update({
-    where: { shortTerm: className, id: classToUpdate?.id },
-    data: { users: { connect: { id: userId } } },
-  });
+  if (className && classToUpdate){
+    await prisma.class.update({
+      where: { shortTerm: className, id: classToUpdate?.id },
+      data: { users: { connect: { id: userId } } },
+    });
+  }
+  return null;
 }
 
 export async function getUserWithQuizSubmission(userId?: string) {
