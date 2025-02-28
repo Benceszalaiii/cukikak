@@ -9,7 +9,11 @@ export async function GET() {
     if (
       session.email.includes("@students.jedlik.eu")
     ) {
-      await addToClass(session.id);
+      try{
+        await addToClass(session.id);
+      }catch(e: unknown){
+        console.log("Error while autorouting: " + e)
+      }
     }
     return permanentRedirect("/");
   }
