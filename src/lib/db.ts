@@ -7,29 +7,32 @@ import { getLevel } from "./utils";
 
 export async function addToClass(userId: string) {
   const user = await getUser();
-  const isClassmate = user?.name?.includes("11C_");
+  if (!user) {
+    return;
+  }
+  const isClassmate = user.name?.includes("11C_");
   if (isClassmate) {
     await prisma.user.update({
       where: { id: userId },
       data: { role: UserRoles.CLASSMATE },
     });
   }
-  const className =
-    (await prisma.class.findMany()).filter(
-      (x) =>
-        x.shortTerm ===
-        (user?.name?.split(" ").filter((y) => y.includes("_")) || "noClass")
-    )[0].shortTerm || "noClass";
+  const userClassname =
+    user.name
+      ?.split(" ")
+      .filter((x) => x === "_")[0]
+      .split("_")[0] || "cantAutoroute";
   const classToUpdate = await prisma.class.findFirst({
-    where: { shortTerm: className },
+    where: { shortTerm: userClassname },
   });
-  if (className && classToUpdate){
-    await prisma.class.update({
-      where: { shortTerm: className, id: classToUpdate?.id },
-      data: { users: { connect: { id: userId } } },
-    });
+  if (!classToUpdate) {
+    return;
   }
-  return null;
+  const classUpdated = await prisma.class.update({
+    where: { id: classToUpdate?.id },
+    data: { users: { connect: { id: user.id } } },
+  });
+  return classUpdated;
 }
 
 export async function getUserWithQuizSubmission(userId?: string) {
