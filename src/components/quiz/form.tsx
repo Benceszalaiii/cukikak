@@ -25,7 +25,7 @@ import {
 import { TagsInput } from "@/components/ui/tags-input";
 import { useState } from "react";
 import { ShinyButton } from "../timeline/submit-button";
-import { submitQuestion } from "@/app/upload/actions";
+import { submitQuestion } from "@/app/11c/upload/actions";
 
 const formSchema = z.object({
   title: z.string().min(1).min(0),

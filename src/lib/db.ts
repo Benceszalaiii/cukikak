@@ -72,7 +72,7 @@ export async function getUser() {
 }
 
 export async function getAllUsers() {
-  const users = await prisma.user.findMany();
+  const users = await prisma.user.findMany({include: {Class: true}});
   return users;
 }
 

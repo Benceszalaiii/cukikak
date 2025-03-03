@@ -25,6 +25,7 @@ import {
   FlagTriangleRightIcon,
   LogOutIcon,
   LucideIcon,
+  ShirtIcon,
   User2Icon,
 } from "lucide-react";
 import { signOut } from "next-auth/react";
@@ -33,6 +34,7 @@ import { twMerge } from "tailwind-merge";
 import { AnimatedGradientText } from "../magicui/animated-gradient-text";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
+import { Separator } from "../ui/separator";
 
 const items = [
   {
@@ -49,8 +51,13 @@ const items = [
 const classmateItems = [
   {
     name: "Kvízfeltöltés",
-    path: "/upload",
+    path: "/11c/upload",
     icon: FilePlusIcon,
+  },
+  {
+    name: "Pólóméret",
+    path: "/11c/shirt",
+    icon: ShirtIcon,
   },
 ];
 
@@ -111,6 +118,7 @@ export default function UserAvatar({
                 {item.name}
               </DrawerItemWithIcon>
             ))}
+            <Separator />
             {classmate &&
               classmateItems.map((item) => (
                 <DrawerItemWithIcon
@@ -124,15 +132,18 @@ export default function UserAvatar({
                 </DrawerItemWithIcon>
               ))}
             {user.admin && (
-              <DrawerItemWithIcon
-                key={"Management bombombom"}
-                onClick={() => {
-                  redirectTo("/admin");
-                }}
-                Icon={DatabaseIcon}
-              >
-                Vezetőség
-              </DrawerItemWithIcon>
+              <>
+                <Separator />
+                <DrawerItemWithIcon
+                  key={"Management bombombom"}
+                  onClick={() => {
+                    redirectTo("/admin");
+                  }}
+                  Icon={DatabaseIcon}
+                >
+                  Vezetőség
+                </DrawerItemWithIcon>
+              </>
             )}
             <DrawerItemWithIcon
               onClick={() => {
@@ -191,6 +202,7 @@ export default function UserAvatar({
             {item.name}
           </DropdownItemWithIcon>
         ))}
+        <Separator />
         {classmate &&
           classmateItems.map((item) => (
             <DropdownItemWithIcon
@@ -203,15 +215,20 @@ export default function UserAvatar({
               {item.name}
             </DropdownItemWithIcon>
           ))}
-        <DropdownItemWithIcon
-          key={"Management bombombom"}
-          onClick={() => {
-            redirectTo("/admin");
-          }}
-          Icon={DatabaseIcon}
-        >
-          Vezetőség
-        </DropdownItemWithIcon>
+        {user.admin && (
+          <>
+            <Separator />
+            <DropdownItemWithIcon
+              key={"Management bombombom"}
+              onClick={() => {
+                redirectTo("/admin");
+              }}
+              Icon={DatabaseIcon}
+            >
+              Vezetőség
+            </DropdownItemWithIcon>
+          </>
+        )}
         <DropdownMenuSeparator />
         <DropdownItemWithIcon
           onClick={() => {

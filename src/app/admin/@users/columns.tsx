@@ -8,13 +8,15 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { User } from "@prisma/client";
+import { translateRole } from "@/lib/utils";
 import { DotsVerticalIcon } from "@radix-ui/react-icons";
 import { ColumnDef } from "@tanstack/react-table";
+import { ArrowUpDownIcon } from "lucide-react";
 import { toast } from "sonner";
 import { setRole } from "../actions";
+import { UserWithClass } from "./page";
 
-export const columns: ColumnDef<User>[] = [
+export const columns: ColumnDef<UserWithClass>[] = [
   {
     accessorKey: "image",
     header: "Profilkép",
@@ -26,6 +28,31 @@ export const columns: ColumnDef<User>[] = [
           <AvatarFallback>{user.name ? user.name[0] : "?"}</AvatarFallback>
         </Avatar>
       );
+    },
+  },
+  {
+    accessorKey: "Class",
+    sortingFn: (a, b)=> {
+      if (a?.original.Class?.name && b?.original.Class?.name) {
+        return a.original.Class?.name.localeCompare(b.original.Class?.name);
+      }
+      return 0;
+    },
+    header: ({ column }) => {
+      return (
+        <Button
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className=""
+          variant={"ghost"}
+        >
+          Osztály
+          <ArrowUpDownIcon></ArrowUpDownIcon>
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const user = row.original;
+      return <div>{user.Class?.name || "-"}</div>;
     },
   },
   {
@@ -45,6 +72,25 @@ export const columns: ColumnDef<User>[] = [
     },
   },
   {
+    accessorKey: "shirtSize",
+    header: ({ column }) => {
+      return (
+        <Button
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className=""
+          variant={"ghost"}
+        >
+          Pólóméret
+          <ArrowUpDownIcon></ArrowUpDownIcon>
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const user = row.original;
+      return <div>{user.shirtSize ? user.shirtSize : "-"}</div>;
+    },
+  },
+  {
     accessorKey: "role",
     header: "Szerepkör",
     cell: ({ row }) => {
@@ -52,7 +98,8 @@ export const columns: ColumnDef<User>[] = [
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant={"outline"}>
+            <Button className="w-32 justify-end" variant={"ghost"}>
+              {translateRole(user.role)}
               <DotsVerticalIcon></DotsVerticalIcon>
             </Button>
           </DropdownMenuTrigger>

@@ -10,7 +10,7 @@ export default function Navbar({ session, showBanner, classmate }: { session: Us
       <div className="flex w-full h-12 bg-rose-800 border-b shadow-md items-center justify-center text-lg font-semibold">
         <div className="flex flex-row gap-4 items-center justify-center">
           Még nem töltötted ki a kvíz kérdéseket.
-          <Link href={"/upload"} className="underline z-[60] underline-offset-2 transition-all duration-300 hover:underline-offset-4 cursor-pointer">Kattints ide a kitöltéshez.</Link>
+          <Link href={"/11c/upload"} className="underline z-[60] underline-offset-2 transition-all duration-300 hover:underline-offset-4 cursor-pointer">Kattints ide a kitöltéshez.</Link>
         </div>
       </div>
       )}

@@ -8,6 +8,15 @@ datasource db {
   url      = env("NEW_DATABASE_URL")
 }
 
+enum ShirtSize {
+  XXL
+  XL
+  L
+  M
+  S
+  XS
+}
+
 model User {
   id              String            @id @default(cuid())
   name            String?
@@ -18,6 +27,7 @@ model User {
   role            UserRoles         @default(USER)
   accounts        Account[]
   sessions        Session[]
+  shirtSize       ShirtSize?
   coins           Float             @default(0)
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
