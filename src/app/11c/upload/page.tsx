@@ -2,8 +2,13 @@
 import QuestionsForm from "@/components/quiz/form";
 import { Separator } from "@/components/ui/separator";
 import { getUserWithQuizSubmission } from "@/lib/db";
+import { Metadata } from "next";
 import Link from "next/link";
-
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "Kvízfeltöltés",
+  };
+}
 const translateDifficulty = (difficulty: string) => {
     switch (difficulty) {
         case "EASY":

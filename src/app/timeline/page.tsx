@@ -3,6 +3,7 @@
 import { Timeline } from "@/components/aceternity/timeline";
 import { getUser } from "@/lib/db";
 import { UserRoles } from "@prisma/client";
+import { Metadata } from "next";
 import Link from "next/link";
 import { getEntries } from "./actions";
 
@@ -30,6 +31,11 @@ export type TimelinePropWithUserData = {
   tags: string[];
   date: Date;
 };
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "Események",
+  };
+}
 
 export default async function Page() {
   const data: TimelinePropWithUserData[] = await getEntries();
@@ -44,7 +50,11 @@ export default async function Page() {
           11.Corleone
         </Link>
       </div>
-      <Timeline data={data} userId={user?.id} canAdd={user?.role === "STAFF"}></Timeline>
+      <Timeline
+        data={data}
+        userId={user?.id}
+        canAdd={user?.role === "STAFF"}
+      ></Timeline>
     </>
   );
 }

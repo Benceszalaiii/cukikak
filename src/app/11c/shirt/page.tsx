@@ -11,7 +11,12 @@ import { Separator } from "@/components/ui/separator";
 import { getUserWithQuizSubmission } from "@/lib/db";
 import Link from "next/link";
 import { handleSubmit } from "./actions";
-
+import { Metadata } from "next";
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "Pólóméret",
+  };
+}
 export default async function Page() {
   const session = await getUserWithQuizSubmission();
   return (
