@@ -18,3 +18,16 @@ export async function handleSubmit(formData: FormData) {
 
   revalidatePath("/11c/shirt");
 }
+
+export async function getShirtSizes(){
+  const users = await prisma.user.findMany({where: { Class: {name: "11.C"}}})
+  const sizes = {
+    "XS": users.filter((user) => user.shirtSize === "XS").length,
+    "S": users.filter((user) => user.shirtSize === "S").length,
+    "M": users.filter((user) => user.shirtSize === "M").length,
+    "L": users.filter((user) => user.shirtSize === "L").length,
+    "XL": users.filter((user) => user.shirtSize === "XL").length,
+    "XXL": users.filter((user) => user.shirtSize === "XXL").length,
+  }
+  return sizes;
+}
