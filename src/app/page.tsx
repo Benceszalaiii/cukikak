@@ -11,6 +11,7 @@ export default function Home() {
       <main className="flex w-full h-full items-center justify-center flex-col">
         <section className="flex absolute top-0 flex-col h-screen max-h-screen w-full items-center justify-center">
           <Threads
+          distance={0.5}
             color={[0.95, 0, 0]}
             amplitude={2}
             enableMouseInteraction={true}
