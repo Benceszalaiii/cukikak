@@ -14,18 +14,31 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "hu_HU",
-    url: "https://11c.vercel.app",
+    url: "https://11c.jedlik.eu",
   },
   authors: {
     name: "Szalai Bence",
     url: "https://www.benceszalai.me",
   },
+  keywords: [
+    "11.Corleone",
+    "Jedlik",
+    "Kampány",
+    "Keresztapu",
+    "11.C",
+    "Győr",
+    "Corleone",
+    "Kampányfilm",
+    "Cukikák",
+    "Győri SZC",
+  ],
   twitter: {
-    images: ["https://11c.vercel.app/opengraph-image.png"],
+    images: ["https://11c.jedlik.eu/opengraph-image.png"],
   },
   category: "education",
   publisher: "Szalai Bence",
-  description: "11.Corleone - Itt mindenki hülye? Itt? Mindenki. \n Győri SZC Jedlik Ányos Gépipari és Informatikai Technikum 11.C osztályának weboldala.",
+  description:
+    "11.Corleone - Itt mindenki hülye? Itt? Mindenki. \n Győri SZC Jedlik Ányos Gépipari és Informatikai Technikum 11.C osztályának weboldala.",
 };
 
 export default function RootLayout({
