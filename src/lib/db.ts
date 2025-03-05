@@ -40,6 +40,12 @@ export async function getClassUsers(className: string){
   const users = await prisma.class.findFirst({where: {name: className}, include: {users: true}})
   return users?.users;
 }
+
+export async function getAllQuestions(){
+  const questions = await prisma.questions.findMany();
+  return questions;
+}
+
 export async function getUserWithQuizSubmission(userId?: string) {
   if (userId) {
     const res = await prisma.user.findUnique({
