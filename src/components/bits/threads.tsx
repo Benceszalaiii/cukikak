@@ -31,7 +31,7 @@ uniform vec2 uMouse;
 
 #define PI 3.1415926538
 
-const int u_line_count = 40;
+const int u_line_count = 30;
 const float u_line_width = 7.0;
 const float u_line_blur = 10.0;
 
@@ -137,9 +137,13 @@ const Threads: React.FC<ThreadsProps> = ({
   useEffect(() => {
     if (!containerRef.current) return;
     const container = containerRef.current;
-
-    const renderer = new Renderer({ dpr: devicePixelRatio, alpha: true });
+    const dpr = Math.min(window.devicePixelRatio, 1.5);
+    const renderer = new Renderer({ dpr: dpr, alpha: true });
     const gl = renderer.gl;
+    const ext = gl.getExtension("EXT_disjoint_timer_query_webgl2");
+    if (ext) {
+      console.log("Using WebGL2 performance query for better optimizations");
+    }
     gl.clearColor(0, 0, 0, 0);
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
