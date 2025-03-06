@@ -1,13 +1,12 @@
 "use server";
 
 import { ScratchToReveal } from "@/components/magicui/scratch-to-reveal";
-import { getUser } from "@/lib/db";
 import Link from "next/link";
 
 
 export default async function ScratchPage() {
     const icons = ["😼", "😼", "😼"]
-    const session = await getUser();
+
     return (
         <>
             <h1 className="w-full text-4xl text-center font-geistmono text-red-600 mt-4"><Link href={"/"}>Nyereményjáték</Link></h1>
