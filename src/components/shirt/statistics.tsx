@@ -26,7 +26,7 @@ export default async function ShirtSizeStatistics() {
           {Object.entries(shirtSizes).map(([size, count]) => (
             <>
               {count > 0 && (
-                <Dialog>
+                <Dialog key={size}>
                   <DialogTrigger asChild>
                     <Button
                       className="w-36"

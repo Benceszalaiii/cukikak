@@ -1,5 +1,6 @@
 "use server";
 
+import { AvatarCircles } from "@/components/magicui/avatar-circles";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Dialog,
@@ -14,31 +15,31 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import Link from "next/link";
-import { AvatarCircles } from "../../components/magicui/avatar-circles";
 import { getRSVPs, RSVPProp } from "./actions";
+import AddRSVP from '../../../components/rsvp/add-component';
 
 export default async function Page() {
   const events = await getRSVPs();
   return (
-    <main className="px-4 md:px-64 py-16">
-      <div className="w-full text-center h-12">
-        <Link href={"/"} className="fixed mx-auto">
-          11.Corleone
-        </Link>
-      </div>
-      <h1 className="text-6xl my-16 font-geistmono tracking-wider font-semibold text-red-600">
-        RSVP (Programkérelmek)
-      </h1>
-      <RSVPSection
-        title="Aktív"
-        events={events.filter((x) => x.attendants.length < x.peopleNeeded)}
-      />
-      <RSVPSection
-        title="Betelt"
-        events={events.filter((x) => x.attendants.length >= x.peopleNeeded)}
-      />
-    </main>
+    <>
+      {" "}
+      <main className="px-4 md:px-64 py-16">
+        <div className="w-full flex flex-col md:flex-row justify-between items-center">
+        <h1 title="Programfelkérések" className="text-6xl my-16 font-geistmono tracking-wider font-semibold text-red-600">
+          RSVP
+        </h1>
+        <AddRSVP />
+        </div>
+        <RSVPSection
+          title="Aktív"
+          events={events.filter((x) => x.attendants.length < x.peopleNeeded)}
+        />
+        <RSVPSection
+          title="Betelt"
+          events={events.filter((x) => x.attendants.length >= x.peopleNeeded)}
+        />
+      </main>
+    </>
   );
 }
 
@@ -55,10 +56,9 @@ const RSVPSection = ({
       <Separator />
       <section className="flex flex-row w-full  items-center px-4 md:px-16 gap-6">
         <article className=" max-w-7xl grid grid-cols-1 grid-flow-dense sm:grid-cols-2 lg:grid-cols-3 items-center justify-center gap-6 p-4">
-          {events
-            .map((curr) => {
-              return <RSVPButton data={curr} key={curr.id} />;
-            })}
+          {events.map((curr) => {
+            return <RSVPButton data={curr} key={curr.id} />;
+          })}
         </article>
       </section>
     </>
@@ -91,7 +91,7 @@ const RSVPButton = ({ data }: { data: RSVPProp }) => {
           </div>
           <section className="w-full flex flex-col gap-4 items-start px-4">
             <div className="w-full flex flex-row justify-between items-center gap-2">
-              <div className="relative w-full bg-gray-900 rounded-2xl h-4 overflow-hidden">
+              <div className="relative w-full bg-neutral-600 rounded-2xl h-2 overflow-hidden">
                 <div
                   className="absolute rounded-2xl bg-gradient-to-r from-rose-600 overflow-y-hidden to-emerald-600 h-full"
                   style={{

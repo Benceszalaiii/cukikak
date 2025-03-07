@@ -48,6 +48,20 @@ export function translateRole(str: UserRoles) {
 }
 
 
+export function translateRSVPType(rsvptype: string){
+  switch (rsvptype){
+    case "WORKSHOP":
+      return "Workshop"
+    case "SHORT":
+      return "Rövid"
+    case "OTHER":
+      return "Egyéb"
+    case "MAIN":
+      return "Főesemény"
+  }
+}
+
+
 export function getLevel(accessLevel: string){
   const processedLevel: UserRoles[] = [];
   switch (accessLevel) {

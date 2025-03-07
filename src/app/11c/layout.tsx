@@ -38,6 +38,7 @@ export default async function Layout({
   }
   return (
     <>
+    <Link href={"/"} className="fixed left-8 top-6 md:top-8 font-geistmono text-3xl font-semibold text-red-600">11.Corleone</Link>
     <div className="fixed right-8 top-6 md:top-8">
       <UserAvatar user={session} classmate={true} />
     </div>

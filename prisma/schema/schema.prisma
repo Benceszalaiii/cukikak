@@ -83,6 +83,13 @@ model Class {
   shortTerm String?
 }
 
+enum RSVPType {
+  MAIN
+  WORKSHOP
+  SHORT
+  OTHER
+}
+
 model RSVP {
   id           Int      @id @default(autoincrement())
   createdBy    User     @relation(fields: [userId], references: [id])
@@ -91,6 +98,7 @@ model RSVP {
   attendants   User[]   @relation("attendant")
   title        String
   description  String
+  type         RSVPType @default(OTHER)
   tags         String[]
   createdAt    DateTime @default(now())
   deadline     DateTime @default(now())

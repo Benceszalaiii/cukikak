@@ -49,7 +49,7 @@ export const AvatarCircles = ({
                 {numPeople}
               </p>
             </TooltipTrigger>
-            <TooltipContent>További résztvevők</TooltipContent>
+            <TooltipContent>Résztvevők</TooltipContent>
           </Tooltip>
         )}
       </div>
