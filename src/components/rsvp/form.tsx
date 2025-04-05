@@ -27,18 +27,27 @@ import { toast } from "sonner";
 import * as z from "zod";
 
 const formSchema = z.object({
-  title: z.string().min(1, "Legalább egy karakter szükséges").nonempty("Legalább egy karakter szükséges"),
-  peopleNeeded: z.number().min(1, "Legalább egy résztvevő szükséges").max(33, "Maximum 33 résztvevőt választhatsz ki.").nonnegative(),
+  title: z
+    .string()
+    .min(1, "Legalább egy karakter szükséges")
+    .nonempty("Legalább egy karakter szükséges"),
+  peopleNeeded: z
+    .number()
+    .min(1, "Legalább egy résztvevő szükséges")
+    .max(33, "Maximum 33 résztvevőt választhatsz ki.")
+    .nonnegative(),
   tags: z.array(z.string()).nonempty("Legalább egy címke szükséges"),
   description: z.string().nonempty("Legalább egy karakter szükséges"),
   rsvptype: z.string(),
 });
-const rsvptypes = Object.keys(RSVPType).map((key)=> {return {key: translateRSVPType(key)}});
+const rsvptypes = Object.keys(RSVPType).map((key) => {
+  return { key: translateRSVPType(key) };
+});
 export default function AddRSVPForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-        tags: []
+      tags: [],
     },
   });
 
@@ -154,9 +163,13 @@ export default function AddRSVPForm() {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                    {Object.fromEntries(rsvptypes).map((kv, index)=> {
-                        return <SelectItem value={key} key={index}>{translateRSVPType(key)}</SelectItem>
-                    })}
+                  {rsvptypes.map((kv, index) => {
+                    return (
+                      <SelectItem value={kv.key || "?"} key={index}>
+                        {translateRSVPType(kv.key || "?")}
+                      </SelectItem>
+                    );
+                  })}
                 </SelectContent>
               </Select>
               <FormDescription>Az esemény típusa</FormDescription>

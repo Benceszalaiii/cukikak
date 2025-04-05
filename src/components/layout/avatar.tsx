@@ -23,6 +23,7 @@ import {
   DatabaseIcon,
   FilePlusIcon,
   FlagTriangleRightIcon,
+  ImagesIcon,
   LogOutIcon,
   LucideIcon,
   ShirtIcon,
@@ -46,6 +47,11 @@ const items = [
     name: "Kampányfilm",
     path: "/movie",
     icon: ClapperboardIcon,
+  },
+  {
+    name: "Galéria",
+    path: "/gallery",
+    icon: ImagesIcon,
   },
 ];
 const classmateItems = [

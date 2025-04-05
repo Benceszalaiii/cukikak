@@ -1,0 +1,55 @@
+"use client";
+
+import { getImages } from "@/app/gallery/actions";
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import ParallaxScroll from "../aceternity/parallax-scroll";
+
+export interface MasonryItem {
+  avatarSrc: string;
+  username: string;
+  id: string;
+  height: number;
+  image: string;
+}
+export default function Parallax({canEdit}: {canEdit: boolean}) {
+  const [amt, setAmt] = useState(0);
+  const [imageAmount, setImageAmount] = useState(25);
+  const [loading, setLoading] = useState(true);
+  const [images, setImages] = useState<MasonryItem[]>([]);
+  useEffect(() => {
+    getImages(imageAmount).then((res) => {
+      setImages(res.images);
+      setAmt(res.amount);
+      setLoading(false);
+    });
+  }, [imageAmount]);
+  if (loading){
+    return (
+        <div className="text-center">
+        <div className="w-16 h-16 border-4 border-dashed rounded-full animate-spin border-yellow-500 mx-auto"></div>
+        <h2 className="text-zinc-900 dark:text-white mt-4">Galéria betöltése...</h2>
+        <p className="text-zinc-600 dark:text-zinc-400">
+            Kérlek várj, amíg a galéria betöltődik. Ez eltarthat egy ideig, mivel sok kép van.
+        </p>
+      </div>
+
+    );
+  }
+  return (
+    <div className="my-8">
+      <ParallaxScroll canEdit={canEdit} data={images} />
+      {amt > imageAmount && (
+        <Button
+          className="self-center"
+          variant={"outline"}
+          onClick={() => {
+            setImageAmount(imageAmount + 25);
+          }}
+        >
+          További képek betöltése
+        </Button>
+      )}
+    </div>
+  );
+}

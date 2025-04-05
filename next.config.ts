@@ -1,5 +1,5 @@
-import { withNextVideo } from "next-video/process";
 import type { NextConfig } from "next";
+import { withNextVideo } from "next-video/process";
 
 const nextConfig: NextConfig = {
   reactStrictMode: false,
@@ -12,6 +12,12 @@ const nextConfig: NextConfig = {
       },
       {
         hostname: "vercel.com",
+      },
+      {
+        hostname: "cloud.appwrite.io",
+      },
+      {
+        hostname: "picsum.photos",
       },
     ],
   },

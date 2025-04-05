@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     "11.Corleone",
     "Jedlik",
     "Kampány",
-    "Keresztapu",
+    "Keresztapa",
     "11.C",
     "Győr",
     "Corleone",
@@ -61,10 +61,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <link
-          rel="icon"
-          href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💰</text></svg>"
-        />
+      <link rel="icon" href="/favicon.png" sizes="any" />
       </head>
       <body>
         <ThemeProvider attribute={"class"} forcedTheme="dark">
