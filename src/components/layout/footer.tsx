@@ -8,7 +8,7 @@ import Link from "next/link";
 export default function Footer() {
   return (
     <footer className="bg-black px-4 text-center flex flex-col items-center justify-center font-geistmono tracking-wider gap-2 py-4 border-t">
-      <div className="flex flex-row gap-4 items-center justify-evenly flex-nowrap font-light tracking-wide text-neutral-200 font-geistmono">
+      <div className="flex flex-row gap-4 items-center justify-evenly flex-wrap font-light tracking-wide text-neutral-200 font-geistmono">
         <SocialMedia
           text="pompomnatur"
           link="https://www.instagram.com/pompomnatur/"
