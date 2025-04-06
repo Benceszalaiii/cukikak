@@ -11,7 +11,6 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { getUser } from "@/lib/db";
 import { Metadata } from "next";
-import Link from "next/link";
 import { handleSubmit } from "./actions";
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -23,12 +22,6 @@ export default async function Page() {
 
   return (
     <section className="w-full flex flex-col gap-4 items-start lg:px-32 pt-16">
-      <Link
-        href={"/"}
-        className="font-geistmono text-4xl fixed top-4 md:top-8 left-6 md:left-12 text-red-600"
-      >
-        11.Corleone
-      </Link>
       <h2 className="font-semibold font-geistmono text-3xl mb-8">Pólóméret</h2>{" "}
       <Separator />
       {session?.shirtSize ? (

@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "prisma generate && next dev --turbopack",
-    "build": "prisma generate && prisma db push && next build",
+    "dev": "prisma generate --no-engine && next dev --turbopack",
+    "build": "prisma generate --no-engine && prisma db push && next build",
     "format:write": "prettier --write \"**/*.{css,js,json,jsx,ts,tsx}\"",
     "format": "prettier \"**/*.{css,js,json,jsx,ts,tsx}\"",
     "start": "next start",
@@ -27,6 +27,7 @@
     "@radix-ui/react-separator": "^1.1.2",
     "@radix-ui/react-slot": "^1.1.2",
     "@radix-ui/react-tooltip": "^1.1.8",
+    "@radix-ui/react-visually-hidden": "^1.1.2",
     "@react-spring/web": "^9.7.5",
     "@tabler/icons-react": "^3.31.0",
     "@tailwindcss/postcss": "^4.0.8",

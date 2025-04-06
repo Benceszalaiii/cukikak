@@ -23,7 +23,6 @@ import {
   LogOutIcon,
   LucideIcon,
   ShirtIcon,
-  User2Icon,
 } from "lucide-react";
 import { signOut } from "next-auth/react";
 import * as React from "react";
@@ -91,14 +90,6 @@ export default function UserAvatar({
             <DrawerTitle>{user.name}</DrawerTitle>
           </DrawerHeader>
           <div className="flex w-full flex-col items-start justify-start gap-1 px-2">
-            <DrawerItemWithIcon
-              onClick={() => {
-                redirectTo(`/user/${user.id}`);
-              }}
-              Icon={User2Icon}
-            >
-              Profil
-            </DrawerItemWithIcon>
             {items.map((item) => (
               <DrawerItemWithIcon
                 key={item.name}
@@ -175,14 +166,6 @@ export default function UserAvatar({
           <h2 className="">{user.name}</h2>
         </div>
         <DropdownMenuSeparator />
-        <DropdownItemWithIcon
-          onClick={() => {
-            redirectTo(`/user/${user.id}`);
-          }}
-          Icon={User2Icon}
-        >
-          Profil
-        </DropdownItemWithIcon>
         {items.map((item) => (
           <DropdownItemWithIcon
             key={item.name}
