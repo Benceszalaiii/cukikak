@@ -177,7 +177,6 @@ export default function UserAvatar({
             {item.name}
           </DropdownItemWithIcon>
         ))}
-        <Separator />
         {classmate &&
           classmateItems.map((item) => (
             <DropdownItemWithIcon
