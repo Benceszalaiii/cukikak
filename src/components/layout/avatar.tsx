@@ -2,7 +2,6 @@
 import {
   Drawer,
   DrawerContent,
-  DrawerDescription,
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
@@ -19,11 +18,8 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 import { User } from "@prisma/client";
 import {
-  ClapperboardIcon,
   DatabaseIcon,
   FilePlusIcon,
-  FlagTriangleRightIcon,
-  ImagesIcon,
   LogOutIcon,
   LucideIcon,
   ShirtIcon,
@@ -37,23 +33,13 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
 
-const items = [
-  {
-    name: "Események",
-    path: "/timeline",
-    icon: FlagTriangleRightIcon,
-  },
-  {
-    name: "Kampányfilm",
-    path: "/movie",
-    icon: ClapperboardIcon,
-  },
-  {
-    name: "Galéria",
-    path: "/gallery",
-    icon: ImagesIcon,
-  },
-];
+interface ItemProp {
+  name: string;
+  path: string;
+  icon: LucideIcon;
+}
+
+const items: ItemProp[] = [];
 const classmateItems = [
   {
     name: "Kvízfeltöltés",
@@ -104,7 +90,7 @@ export default function UserAvatar({
           <DrawerHeader>
             <DrawerTitle>{user.name}</DrawerTitle>
           </DrawerHeader>
-          <DrawerDescription className="flex w-full flex-col items-start justify-start gap-1 px-2">
+          <div className="flex w-full flex-col items-start justify-start gap-1 px-2">
             <DrawerItemWithIcon
               onClick={() => {
                 redirectTo(`/user/${user.id}`);
@@ -159,7 +145,7 @@ export default function UserAvatar({
             >
               Kijelentkezés
             </DrawerItemWithIcon>
-          </DrawerDescription>
+          </div>
           <DrawerFooter className="mb-4 mt-6 text-center text-sm text-neutral-700">
             {user.email}
           </DrawerFooter>

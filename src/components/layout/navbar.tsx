@@ -1,25 +1,100 @@
+"use client";
 import { User } from "@prisma/client";
-import Link from "next/link";
+import {
+  ClapperboardIcon,
+  FlagTriangleRightIcon,
+  ImagesIcon,
+} from "lucide-react";
+import { useState } from "react";
+import {
+  MobileNav,
+  MobileNavHeader,
+  MobileNavMenu,
+  MobileNavToggle,
+  Navbar,
+  NavbarLogo,
+  NavBody,
+  NavItems,
+} from "../aceternity/nav";
 import SignInButton from "../signin";
 import UserAvatar from "./avatar";
 
-export default function Navbar({ session, showBanner, classmate }: { session: User | null, showBanner: boolean, classmate: boolean }) {
+export default function Navbar2({
+  session,
+  classmate,
+}: {
+  session: User | null;
+  classmate: boolean;
+}) {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navItems = [
+    {
+      name: "Események",
+      link: "/timeline",
+      icon: FlagTriangleRightIcon,
+    },
+    {
+      name: "Film",
+      link: "/movie",
+      icon: ClapperboardIcon,
+    },
+    {
+      name: "Galéria",
+      link: "/gallery",
+      icon: ImagesIcon,
+    },
+  ];
   return (
-    <>
-    {showBanner &&(
-      <div className="flex w-full h-12 bg-rose-800 border-b shadow-md items-center justify-center text-lg font-semibold">
-        <div className="flex flex-row gap-4 items-center justify-center">
-          Még nem töltötted ki a kvíz kérdéseket.
-          <Link href={"/11c/upload"} className="underline z-[60] underline-offset-2 transition-all duration-300 hover:underline-offset-4 cursor-pointer">Kattints ide a kitöltéshez.</Link>
-        </div>
-      </div>
-      )}
-    <nav className="sticky z-50 top-0 md:px-16 px-4 py-2 left-0 w-full flex flex-row items-center justify-end">
-      {/* <Link href={"/"} className="text-2xl  text-foreground font-semibold font-caveat">
-        11. Corleone
-      </Link> */}
-      {session ? <UserAvatar classmate={classmate} user={session} /> : <SignInButton />}
-    </nav>
-        </>
+    <div className="relative w-full">
+      <Navbar>
+        {/* Desktop Navigation */}
+        <NavBody>
+          <NavbarLogo />
+          <NavItems items={navItems} />
+          <div className="flex items-center gap-4">
+            {session ? (
+              <UserAvatar classmate={classmate} user={session} />
+            ) : (
+              <SignInButton />
+            )}
+          </div>
+        </NavBody>
+
+        {/* Mobile Navigation */}
+        <MobileNav>
+          <MobileNavHeader>
+            <NavbarLogo />
+            <MobileNavToggle
+              isOpen={isMobileMenuOpen}
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            />
+          </MobileNavHeader>
+
+          <MobileNavMenu
+            isOpen={isMobileMenuOpen}
+            onClose={() => setIsMobileMenuOpen(false)}
+          >
+            {navItems.map((item, idx) => (
+              <a
+                key={`mobile-link-${idx}`}
+                href={item.link}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="relative text-neutral-600 dark:text-neutral-300"
+              >
+                <span className="block">{item.name}</span>
+              </a>
+            ))}
+            <div className="flex w-full flex-col gap-4">
+              {session ? (
+                <UserAvatar classmate={classmate} user={session} />
+              ) : (
+                <SignInButton />
+              )}
+            </div>
+          </MobileNavMenu>
+        </MobileNav>
+      </Navbar>
+      {/* Navbar */}
+    </div>
   );
 }

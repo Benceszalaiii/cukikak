@@ -4,6 +4,11 @@ import { withNextVideo } from "next-video/process";
 const nextConfig: NextConfig = {
   reactStrictMode: false,
   output: "standalone",
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "25mb",
+    },
+  },
   images: {
     minimumCacheTTL: 60,
     remotePatterns: [

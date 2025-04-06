@@ -1,10 +1,10 @@
 "use server";
 
 import { Timeline } from "@/components/aceternity/timeline";
+import Nav from "@/components/layout/nav";
 import { getUser } from "@/lib/db";
 import { UserRoles } from "@prisma/client";
 import { Metadata } from "next";
-import Link from "next/link";
 import { getEntries } from "./actions";
 
 export type TimelinePropWithUserData = {
@@ -42,14 +42,7 @@ export default async function Page() {
   const user = await getUser();
   return (
     <>
-      <div className="flex fixed items-center w-full z-10 top-4 text-red-600 justify-center">
-        <Link
-          href={"/"}
-          className="duration-500 ease-in-out font-geistmono motion-loop-once text-3xl font-semibold transition-all hover:motion-preset-stretch-md"
-        >
-          11.Corleone
-        </Link>
-      </div>
+      <Nav />
       <Timeline
         data={data}
         userId={user?.id}

@@ -34,8 +34,6 @@ export async function addToClass(userId: string) {
   });
   return classUpdated;
 }
-
-
 export async function getClassUsers(className: string){
   const users = await prisma.class.findFirst({where: {name: className}, include: {users: true}})
   return users?.users;

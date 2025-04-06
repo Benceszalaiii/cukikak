@@ -16,12 +16,11 @@ export default async function Page() {
     <main className="px-4 flex flex-col justify-center self-center w-full ">
       <div className="my-16 p-4">
         <h2 className="text-3xl font-semibold ">
-          Töltsd fel a legjobb fotóidat, mémjeidet, rajzaidat vagy emlékeidet –
-          ez a galéria mindenkié!
+          Töltsd fel a legjobb fotóidat, mémjeidet, rajzaidat vagy emlékeidet
         </h2>
         <p className="mt-2 text-sm pl-4">
           Legyen vicces, menő vagy épp csak random - itt az egész suli együtt
-          oszthatja meg, amit szeretne
+          oszthatja meg, amit csak szeretne. (Kivéve explicit tartalom)
         </p>
       </div>
       {user && (

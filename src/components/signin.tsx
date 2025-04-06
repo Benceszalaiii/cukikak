@@ -1,24 +1,17 @@
-import { auth, signIn } from "@/lib/auth";
+"use client";
+import { signIn } from "next-auth/react";
+import { NavbarButton } from "./aceternity/nav";
 import ShinyText from "./bits/shiny";
-import { AnimatedGradientText } from './magicui/animated-gradient-text';
 
-export default async function SignInButton() {
-  const session = await auth();
-  if (session) {
-    return null;
-  }
+export default function SignInButton() {
   return (
-    <form
-      action={async () => {
-        "use server";
-        await signIn("google");
+    <NavbarButton
+      variant="dark"
+      onClick={() => {
+        signIn("google");
       }}
     >
-      <button type="submit">
-      <AnimatedGradientText className="cursor-pointer">
       <ShinyText text="Bejelentkezés"></ShinyText>
-      </AnimatedGradientText>
-      </button>
-    </form>
+    </NavbarButton>
   );
 }
