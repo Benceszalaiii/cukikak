@@ -10,8 +10,8 @@ export default function Footer() {
     <footer className="bg-black px-4 text-center flex flex-col items-center justify-center font-geistmono tracking-wider gap-2 py-4 border-t">
       <div className="flex flex-row gap-4 items-center justify-evenly flex-wrap font-light tracking-wide text-neutral-200 font-geistmono">
         <SocialMedia
-          text="pompomnatur"
-          link="https://www.instagram.com/pompomnatur/"
+          text="11c.corleone"
+          link="https://www.instagram.com/11c.corleone/"
         >
           <IconBrandInstagram />
         </SocialMedia>
@@ -29,13 +29,13 @@ export default function Footer() {
         </SocialMedia>
       </div>
       <p className="font-light">
-        Az oldalt készítette{" "}
+        {" "}
         <Link
           draggable={false}
-          className="underline cursor-pointer underline-offset-2 font-semibold font-caveat tracking-widest"
-          href={"https://www.benceszalai.me"}
+          className="cursor-pointer underline-offset-2 text-green-600 font-semibold font-geistmono tracking-widest"
+          href={"https://khrone.benceszalai.me"}
         >
-          Szalai Bence
+          Khrone
         </Link>
       </p>
     </footer>
