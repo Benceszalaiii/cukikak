@@ -22,8 +22,8 @@ export default function Footer() {
           <IconBrandTiktok />
         </SocialMedia>
         <SocialMedia
-          text="pompomnatur"
-          link="https://www.youtube.com/@pompomnaturkozmetikum9475"
+          text="11.Corleone"
+          link="https://www.youtube.com/@11.Corleone"
         >
           <IconBrandYoutube />
         </SocialMedia>
