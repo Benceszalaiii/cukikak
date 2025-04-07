@@ -21,13 +21,15 @@ export default function MoviePage() {
           ></Image>
         </Link>
       </div>
+      <div className="w-full h-full flex items-center justify-center max-w-7xl">
       <Player
-        className=""
+        className="aspect-[2581/1080] flex flex-row w-full h-full items-center justify-center object-center"
         theme={playerTheme}
         autoPlay={false}
         key="video"
-        src={"http://www.cukikak.store/interview.mp4"}
-      />
+        src={"/trailer.mp4"}
+        />
+        </div>
     </section>
   );
 }
