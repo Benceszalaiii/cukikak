@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
     serverActions: {
       bodySizeLimit: "25mb",
     },
+    useCache: true
   },
   images: {
     minimumCacheTTL: 60,

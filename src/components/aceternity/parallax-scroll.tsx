@@ -1,3 +1,4 @@
+
 import { a, useTransition } from "@react-spring/web";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
@@ -28,7 +29,7 @@ interface MasonryProps {
   canEdit: boolean
 }
 
-function Masonry({ data, canEdit }: MasonryProps) {
+ function Masonry({ data, canEdit }: MasonryProps) {
   const [columns, setColumns] = useState<number>(2);
 
   useEffect(() => {
@@ -117,7 +118,6 @@ function Masonry({ data, canEdit }: MasonryProps) {
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
-            
             >
             { canEdit && 
             <X className="absolute top-2 right-2 cursor-pointer stroke-red-600" onClick={(event)=> {

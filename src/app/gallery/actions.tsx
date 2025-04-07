@@ -28,15 +28,12 @@ export async function uploadFile(file: File, explicit: boolean) {
 }
 
 export async function getImages(amount: number) {
-  const amountOfPictures = await prisma.publicImage.count({
-    where: { explicit: false },
-  });
   const data = await prisma.publicImage.findMany({
     where: { explicit: false },
     include: { postedBy: { select: { name: true, image: true } } },
     take: amount,
   });
-  return { data, amount: amountOfPictures };
+  return { data, amount: data.length };
 }
 
 export async function deleteImage(id: string) {
