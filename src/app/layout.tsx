@@ -1,5 +1,6 @@
 import Footer from "@/components/layout/footer";
 import { Toaster } from "@/components/ui/sonner";
+import { Analytics } from "@vercel/analytics/react";
 import { cx } from "class-variance-authority";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
@@ -66,6 +67,7 @@ export default function RootLayout({
       <body>
         <ThemeProvider attribute={"class"} forcedTheme="dark">
           <Toaster />
+          <Analytics />
           <main className="min-h-screen w-full bg-black selection:bg-red-600 selection:text-black">
             {children}
           </main>
