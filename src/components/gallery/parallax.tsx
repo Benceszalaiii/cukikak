@@ -11,6 +11,7 @@ export interface MasonryItem {
   id: string;
   height: number;
   image: string;
+  isExplicit: boolean;
 }
 export default function Parallax({canEdit}: {canEdit: boolean}) {
   const [amt, setAmt] = useState(0);
@@ -18,21 +19,21 @@ export default function Parallax({canEdit}: {canEdit: boolean}) {
   const [loading, setLoading] = useState(true);
   const [images, setImages] = useState<MasonryItem[]>([]);
   useEffect(() => {
-    getImages(imageAmount).then((res) => {
-      
+    getImages(imageAmount, canEdit).then((res) => {
       setImages(res.data.map((item)=> {
           return {
               avatarSrc: item.postedBy.image || "?",
               username: item.postedBy.name || "?",
               id: item.id,
               height: 500,
-              image: item.publicLink
+              image: item.publicLink,
+              isExplicit: item.explicit
           }
         }))
       setAmt(res.amount);
       setLoading(false);
     });
-  }, [imageAmount]);
+  }, [imageAmount, canEdit]);
   if (loading){
     return (
         <div className="text-center">

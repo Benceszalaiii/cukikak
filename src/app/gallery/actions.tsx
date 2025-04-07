@@ -5,7 +5,6 @@ import { getUser } from "@/lib/db";
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
-
 export async function uploadFile(file: File, explicit: boolean) {
   const id = crypto.randomUUID();
   const session = await getUser();
@@ -27,7 +26,14 @@ export async function uploadFile(file: File, explicit: boolean) {
   throw new Error("Feltöltési hiba történt!");
 }
 
-export async function getImages(amount: number) {
+export async function getImages(amount: number, canEdit: boolean) {
+  if (canEdit) {
+    const data = await prisma.publicImage.findMany({
+      include: { postedBy: { select: { name: true, image: true } } },
+      take: amount,
+    });
+    return { data, amount: data.length };
+  }
   const data = await prisma.publicImage.findMany({
     where: { explicit: false },
     include: { postedBy: { select: { name: true, image: true } } },
@@ -45,6 +51,22 @@ export async function deleteImage(id: string) {
     await prisma.publicImage.update({
       where: { id: id },
       data: { explicit: true },
+    });
+    revalidatePath("/gallery");
+  }
+  return;
+}
+
+
+export async function restoreImage(id: string) {
+  const session = await getUser();
+  if (!session) {
+    return { status: 401, message: "A folytatáshoz jelentkezz be." };
+  }
+  if (session.admin && session.role === "STAFF") {
+    await prisma.publicImage.update({
+      where: { id: id },
+      data: { explicit: false },
     });
     revalidatePath("/gallery");
   }
