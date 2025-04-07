@@ -16,8 +16,8 @@ export default function Footer() {
           <IconBrandInstagram />
         </SocialMedia>
         <SocialMedia
-          text="pompomnatur"
-          link="https://www.tiktok.com/@pompomnatur"
+          text="11.corleone"
+          link="https://www.tiktok.com/@11.corleone"
         >
           <IconBrandTiktok />
         </SocialMedia>
