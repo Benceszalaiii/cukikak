@@ -5,13 +5,7 @@ import { getUser } from "@/lib/db";
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
-interface MasonryItem {
-  avatarSrc: string;
-  username: string;
-  id: string;
-  height: number;
-  image: string;
-}
+
 export async function uploadFile(file: File, explicit: boolean) {
   const id = crypto.randomUUID();
   const session = await getUser();
@@ -34,29 +28,28 @@ export async function uploadFile(file: File, explicit: boolean) {
 }
 
 export async function getImages(amount: number) {
-  const images: MasonryItem[] = [];
-  const amountOfPictures = await prisma.publicImage.count({where: {explicit: false}});
-  const data = await prisma.publicImage.findMany({where: {explicit: false}, include: {postedBy: {select: {name: true, image: true}}}, take: amount});
-  data.forEach((item)=> {
-    images.push({
-        avatarSrc: item.postedBy.image || "?",
-        username: item.postedBy.name || "?",
-        id: item.id,
-        height: 500,
-        image: item.publicLink
-    })
-  })
-  return {images, amount: amountOfPictures};
+  const amountOfPictures = await prisma.publicImage.count({
+    where: { explicit: false },
+  });
+  const data = await prisma.publicImage.findMany({
+    where: { explicit: false },
+    include: { postedBy: { select: { name: true, image: true } } },
+    take: amount,
+  });
+  return { data, amount: amountOfPictures };
 }
 
-export async function deleteImage(id: string){
+export async function deleteImage(id: string) {
   const session = await getUser();
   if (!session) {
     return { status: 401, message: "A folytatáshoz jelentkezz be." };
   }
   if (session.admin && session.role === "STAFF") {
-    await prisma.publicImage.update({where: {id: id}, data: {explicit: true}});
+    await prisma.publicImage.update({
+      where: { id: id },
+      data: { explicit: true },
+    });
     revalidatePath("/gallery");
   }
-return;
+  return;
 }

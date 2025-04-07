@@ -19,7 +19,16 @@ export default function Parallax({canEdit}: {canEdit: boolean}) {
   const [images, setImages] = useState<MasonryItem[]>([]);
   useEffect(() => {
     getImages(imageAmount).then((res) => {
-      setImages(res.images);
+      
+      setImages(res.data.map((item)=> {
+          return {
+              avatarSrc: item.postedBy.image || "?",
+              username: item.postedBy.name || "?",
+              id: item.id,
+              height: 500,
+              image: item.publicLink
+          }
+        }))
       setAmt(res.amount);
       setLoading(false);
     });
