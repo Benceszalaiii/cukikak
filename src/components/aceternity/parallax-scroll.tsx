@@ -1,14 +1,18 @@
-
-import { a, useTransition } from "@react-spring/web";
-import { useEffect, useMemo, useRef, useState } from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { cn } from "@/lib/utils";
-import { X } from "lucide-react";
-import { toast } from "sonner";
 import { deleteImage } from "@/app/gallery/actions";
-import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "../ui/dialog";
-import Image from "next/image";
+import { cn } from "@/lib/utils";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { a, useTransition } from "@react-spring/web";
+import { X } from "lucide-react";
+import Image from "next/image";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { toast } from "sonner";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "../ui/dialog";
 interface MasonryItem {
   avatarSrc: string;
   username: string;
@@ -26,10 +30,10 @@ interface GridItem extends MasonryItem {
 
 interface MasonryProps {
   data: MasonryItem[];
-  canEdit: boolean
+  canEdit: boolean;
 }
 
- function Masonry({ data, canEdit }: MasonryProps) {
+function Masonry({ data, canEdit }: MasonryProps) {
   const [columns, setColumns] = useState<number>(2);
 
   useEffect(() => {
@@ -108,48 +112,70 @@ interface MasonryProps {
           className="absolute p-[15px] group [will-change:transform,width,height,opacity]"
         >
           <Dialog>
-          <DialogTrigger asChild>
+            <DialogTrigger asChild>
+              <div
+                className="relative w-full h-full overflow-hidden hover:border flex items-end uppercase text-[10px] leading-[10px] rounded-[4px] shadow-[0px_10px_50px_-10px_rgba(0,0,0,0.2)] transition duration-300 ease hover:scale-110"
+                style={{
+                  backgroundColor: "#ffffff",
+                  backgroundImage: `url(${item.image})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}
+              >
+                {canEdit && (
+                  <X
+                    className="absolute top-2 right-2 cursor-pointer stroke-red-600"
+                    onClick={(event) => {
+                      event.currentTarget.classList.add(
+                        "pointer-events-none",
+                        "cursor-not-allowed",
+                        "opacity-50"
+                      );
 
-          <div
-            className="relative w-full h-full overflow-hidden hover:border flex items-end uppercase text-[10px] leading-[10px] rounded-[4px] shadow-[0px_10px_50px_-10px_rgba(0,0,0,0.2)] transition duration-300 ease hover:scale-110"
-            style={{
-              backgroundColor: "#ffffff",
-              backgroundImage: `url(${item.image})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-            >
-            { canEdit && 
-            <X className="absolute top-2 right-2 cursor-pointer stroke-red-600" onClick={(event)=> {
-              event.currentTarget.classList.add("pointer-events-none", "cursor-not-allowed", "opacity-50")
-              
-              toast.promise(async ()=> {deleteImage(item.id)}, {
-                loading: "Törlés...",
-                success: "Kép törölve!",
-                error: (e) => {
-                  event.currentTarget.classList.remove("pointer-events-none", "cursor-not-allowed", "opacity-50")
-                  return `Hiba történt: ${e}`
-                }
-              })
-            }} />
-          }
-          <div className={cn("bg-gradient-to-t opacity-0 group-hover:opacity-100 ease flex flex-row items-center justify-start pt-4 gap-2 from-neutral-950/90 via-neutral-900/60 via-50% to-transparent p-2 w-full transition-all duration-300 ")}>
-          <Avatar className="size-8">
-            <AvatarImage src={item.avatarSrc}></AvatarImage>
-            <AvatarFallback>{item.username[0]}</AvatarFallback>
-          </Avatar>
-          <p>
-          {item.username}
-          </p>
-          </div>
-          </div>
-          </DialogTrigger>
-          <DialogContent className="flex w-fit h-fit p-0">
-            <VisuallyHidden>
-            <DialogTitle>{item.username}</DialogTitle>
-            </VisuallyHidden>
-            <Image width={item.width} height={item.height} src={item.image} alt={item.username}></Image>
-          </DialogContent>
+                      toast.promise(
+                        async () => {
+                          deleteImage(item.id);
+                        },
+                        {
+                          loading: "Törlés...",
+                          success: "Kép törölve!",
+                          error: (e) => {
+                            event.currentTarget.classList.remove(
+                              "pointer-events-none",
+                              "cursor-not-allowed",
+                              "opacity-50"
+                            );
+                            return `Hiba történt: ${e}`;
+                          },
+                        }
+                      );
+                    }}
+                  />
+                )}
+                <div
+                  className={cn(
+                    "bg-gradient-to-t opacity-0 group-hover:opacity-100 ease flex flex-row items-center justify-start pt-4 gap-2 from-neutral-950/90 via-neutral-900/60 via-50% to-transparent p-2 w-full transition-all duration-300 "
+                  )}
+                >
+                  <Avatar className="size-8">
+                    <AvatarImage src={item.avatarSrc}></AvatarImage>
+                    <AvatarFallback>{item.username[0]}</AvatarFallback>
+                  </Avatar>
+                  <p>{item.username}</p>
+                </div>
+              </div>
+            </DialogTrigger>
+            <DialogContent className="flex w-fit h-fit p-0">
+              <VisuallyHidden>
+                <DialogTitle>{item.username}</DialogTitle>
+              </VisuallyHidden>
+              <Image
+                width={item.width}
+                height={item.height}
+                src={item.image}
+                alt={item.username}
+              ></Image>
+            </DialogContent>
           </Dialog>
         </a.div>
       ))}

@@ -1,4 +1,6 @@
 "use client";
+import { uploadFile } from "@/app/gallery/actions";
+import NSFWFilter from "@/lib/filter";
 import { cn } from "@/lib/utils";
 import { IconUpload } from "@tabler/icons-react";
 import { motion } from "motion/react";
@@ -7,8 +9,6 @@ import { useRef, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
-import NSFWFilter from '@/lib/filter';
-import { uploadFile } from "@/app/gallery/actions";
 
 const mainVariant = {
   initial: {
@@ -40,7 +40,7 @@ export const FileUpload = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (newFiles: File[]) => {
-    if (loading){
+    if (loading) {
       return;
     }
     if (!newFiles[0].type.startsWith("image/")) {
@@ -66,15 +66,20 @@ export const FileUpload = ({
     },
   });
   const [loading, setLoading] = useState(false);
-  async function handleUpload(){
+  async function handleUpload() {
     setLoading(true);
-    if (file){
+    if (file) {
       const isExplicit = !(await NSFWFilter.isSafe(file.file));
-      if (isExplicit){
+      if (isExplicit) {
         toast.error("A feltöltött fájl explicit tartalmat tartalmaz!");
       }
-      const res = await uploadFile(file.file, isExplicit);
-      toast.info(res.message);
+      try {
+        const res = await uploadFile(file.file, isExplicit);
+        toast.info(res.message);
+      } catch (e: unknown) {
+        toast.error(`${file.file.type} fájlformátum nem engedélyezett! `);
+        console.log(e);
+      }
       setFile(null);
       setLoading(false);
     }
@@ -84,7 +89,12 @@ export const FileUpload = ({
       className="w-full max-w-7xl my-12 border rounded-lg self-center"
       {...getRootProps()}
     >
-      <motion.div className={cn("p-10 group/file block rounded-lg w-full shadow-2xl relative overflow-hidden", loading && "pointer-events-none opacity-75")}>
+      <motion.div
+        className={cn(
+          "p-10 group/file block rounded-lg w-full shadow-2xl relative overflow-hidden",
+          loading && "pointer-events-none opacity-75"
+        )}
+      >
         <input
           ref={fileInputRef}
           id="file-upload-handle"
@@ -202,11 +212,8 @@ export const FileUpload = ({
             )}
           </div>
         </div>
-      {file &&
-      <Button onClick={handleUpload}>Feltöltés</Button>
-      }
+        {file && <Button onClick={handleUpload}>Feltöltés</Button>}
       </motion.div>
     </div>
   );
 };
-

@@ -66,7 +66,7 @@ export const Timeline = ({
       className="w-full overflow-y-hidden h-fit font-geistmono lg:px-10"
       ref={containerRef}
     >
-      <div className="max-w-7xl mx-auto py-20 px-4 lg:px-8 lg:px-10">
+      <div className="max-w-7xl mx-auto py-20 px-4 lg:px-10">
         <h2 className="text-lg lg:text-4xl mb-4 text-black dark:text-white max-w-4xl">
           Események
         </h2>

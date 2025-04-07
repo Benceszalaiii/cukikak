@@ -17,29 +17,26 @@ export async function addToClass(userId: string) {
       data: { role: UserRoles.CLASSMATE },
     });
   }
-  const userClassname =
-    user.name
-      ?.split(" ")
-      .filter((x) => x === "_")[0]
-      .split("_")[0] || "cantAutoroute";
-  const classToUpdate = await prisma.class.findFirst({
-    where: { shortTerm: userClassname },
-  });
-  if (!classToUpdate) {
-    return;
-  }
+  const classnames = await prisma.class.findMany();
+  const userClassname = classnames.find((x) =>
+    user.name?.includes(x.shortTerm || "23C")
+);
+
   const classUpdated = await prisma.class.update({
-    where: { id: classToUpdate?.id },
+    where: { id: userClassname?.id },
     data: { users: { connect: { id: user.id } } },
   });
   return classUpdated;
 }
-export async function getClassUsers(className: string){
-  const users = await prisma.class.findFirst({where: {name: className}, include: {users: true}})
+export async function getClassUsers(className: string) {
+  const users = await prisma.class.findFirst({
+    where: { name: className },
+    include: { users: true },
+  });
   return users?.users;
 }
 
-export async function getAllQuestions(){
+export async function getAllQuestions() {
   const questions = await prisma.questions.findMany();
   return questions;
 }
@@ -81,7 +78,7 @@ export async function getUser() {
 }
 
 export async function getAllUsers() {
-  const users = await prisma.user.findMany({include: {Class: true}});
+  const users = await prisma.user.findMany({ include: { Class: true } });
   return users;
 }
 
