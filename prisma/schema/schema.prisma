@@ -39,6 +39,8 @@ model User {
   RSVPcreated     RSVP[]
   RSVP            RSVP[]            @relation("attendant")
   PublicImage     PublicImage[]
+  clientSeed      String            @default(cuid())
+  Scratch         Scratch[]
 }
 
 enum UserRoles {
@@ -106,9 +108,24 @@ model RSVP {
 }
 
 model PublicImage {
-  id       String @id @default(cuid())
-  postedBy User   @relation(fields: [userId], references: [id])
-  userId   String
+  id         String  @id @default(cuid())
+  postedBy   User    @relation(fields: [userId], references: [id])
+  userId     String
   publicLink String
-  explicit Boolean
+  explicit   Boolean
+}
+
+model Scratch {
+  id         String   @id @default(cuid())
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
+  seed       String
+  nonce      Int      @default(0)
+  clientSeed String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  prize      Int
+  result     String[]
+  scratched  Int[]
+  paid Boolean @default(false)
 }

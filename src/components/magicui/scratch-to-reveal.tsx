@@ -1,5 +1,6 @@
 "use client";
 
+import { scratchCard } from "@/app/daily/scratch/actions";
 import { cn } from "@/lib/utils";
 import { motion, useAnimation } from "motion/react";
 import React, { useEffect, useRef, useState } from "react";
@@ -12,6 +13,9 @@ interface ScratchToRevealProps {
   className?: string;
   onComplete?: () => void;
   gradientColors?: [string, string, string];
+  complete: boolean;
+  scratchId: string;
+  idx: number;
 }
 
 export const ScratchToReveal: React.FC<ScratchToRevealProps> = ({
@@ -21,11 +25,14 @@ export const ScratchToReveal: React.FC<ScratchToRevealProps> = ({
   onComplete,
   children,
   className,
+  scratchId,
+  idx,
+  complete = false,
   gradientColors = ["#A97CF8", "#F38CB8", "#FDCC92"],
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isScratching, setIsScratching] = useState(false);
-  const [isComplete, setIsComplete] = useState(false);
+  const [isComplete, setIsComplete] = useState(complete);
   const [canShowChildren, setCanShowChildren] = useState(false);
   const controls = useAnimation();
 
@@ -39,7 +46,7 @@ export const ScratchToReveal: React.FC<ScratchToRevealProps> = ({
         0,
         0,
         canvas.width,
-        canvas.height,
+        canvas.height
       );
       gradient.addColorStop(0, gradientColors[0]);
       gradient.addColorStop(0.5, gradientColors[1]);
@@ -117,9 +124,6 @@ export const ScratchToReveal: React.FC<ScratchToRevealProps> = ({
     });
 
     // Call onComplete after animation finishes
-    if (onComplete) {
-      onComplete();
-    }
   };
 
   const checkCompletion = () => {
@@ -141,6 +145,10 @@ export const ScratchToReveal: React.FC<ScratchToRevealProps> = ({
 
       if (percentage >= minScratchPercentage) {
         setIsComplete(true);
+        if (onComplete) {
+          onComplete();
+        }
+        scratchCard(scratchId, idx);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         startAnimation();
       }
@@ -149,7 +157,10 @@ export const ScratchToReveal: React.FC<ScratchToRevealProps> = ({
 
   return (
     <motion.div
-      className={cn("relative rounded-2xl select-none", canShowChildren && className)}
+      className={cn(
+        "relative rounded-2xl select-none",
+        canShowChildren && className
+      )}
       style={{
         width,
         height,
@@ -162,6 +173,7 @@ export const ScratchToReveal: React.FC<ScratchToRevealProps> = ({
         ref={canvasRef}
         width={width}
         height={height}
+        hidden={isComplete}
         className="absolute rounded-2xl left-0 top-0"
         onMouseDown={handleMouseDown}
         onTouchStart={handleTouchStart}

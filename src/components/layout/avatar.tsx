@@ -20,6 +20,7 @@ import { User } from "@prisma/client";
 import {
   DatabaseIcon,
   FilePlusIcon,
+  GiftIcon,
   LogOutIcon,
   LucideIcon,
   ShirtIcon,
@@ -38,7 +39,13 @@ interface ItemProp {
   icon: LucideIcon;
 }
 
-const items: ItemProp[] = [];
+const items: ItemProp[] = [
+  {
+    name: "Nyereményjáték",
+    path: "/daily",
+    icon: GiftIcon,
+  },
+];
 const classmateItems = [
   {
     name: "Kvízfeltöltés",
@@ -89,6 +96,7 @@ export default function UserAvatar({
           <DrawerHeader>
             <DrawerTitle>{user.name}</DrawerTitle>
           </DrawerHeader>
+          <Separator />
           <div className="flex w-full flex-col items-start justify-start gap-1 px-2">
             {items.map((item) => (
               <DrawerItemWithIcon
@@ -101,7 +109,8 @@ export default function UserAvatar({
                 {item.name}
               </DrawerItemWithIcon>
             ))}
-            <Separator />
+            {items.length > 0 && <Separator />}
+
             {classmate &&
               classmateItems.map((item) => (
                 <DrawerItemWithIcon
@@ -177,6 +186,7 @@ export default function UserAvatar({
             {item.name}
           </DropdownItemWithIcon>
         ))}
+        {items.length > 0 && <DropdownMenuSeparator />}
         {classmate &&
           classmateItems.map((item) => (
             <DropdownItemWithIcon
@@ -259,4 +269,3 @@ const DrawerItemWithIcon = ({
     </Button>
   );
 };
- 
