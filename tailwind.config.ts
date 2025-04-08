@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import { default as flattenColorPalette } from "tailwindcss/lib/util/flattenColorPalette";
 export default {
   darkMode: "class",
   content: [
@@ -8,9 +9,7 @@ export default {
     "./src/lib/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  plugins: [
-    addVariablesForColors,
-  ],
+  plugins: [addVariablesForColors],
   theme: {
     extend: {
       colors: {
@@ -62,6 +61,7 @@ export default {
         netflix: "var(--font-netflix), sans-serif",
         geistmono: "var(--font-geist-mono)",
         geistsans: "var(--font-geist-sans)",
+        music: "var(--font-music)",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -95,14 +95,14 @@ export default {
     },
   },
 } satisfies Config;
-import { default as flattenColorPalette } from "tailwindcss/lib/util/flattenColorPalette";
- 
-function addVariablesForColors({ addBase, theme }: any) {return;
+
+function addVariablesForColors({ addBase, theme }: any) {
+  return;
   let allColors = flattenColorPalette(theme("colors"));
   let newVars = Object.fromEntries(
     Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
   );
- 
+
   addBase({
     ":root": newVars,
   });

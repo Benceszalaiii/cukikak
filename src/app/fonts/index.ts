@@ -5,6 +5,11 @@ export const geistMono = localFont({
   variable: "--font-geist-mono",
 });
 
+
+export const musicFont = localFont({
+  src: "./IAmMusic-Regular.ttf-_4_.ttf",
+  variable: "--font-music"
+})
 export const geistSans = localFont({
   src: "./GeistVF.woff",
   variable: "--font-geist-sans",

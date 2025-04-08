@@ -1,4 +1,5 @@
 import {
+  IconBrandFacebook,
   IconBrandInstagram,
   IconBrandTiktok,
   IconBrandYoutube,
@@ -26,6 +27,12 @@ export default function Footer() {
           link="https://www.youtube.com/@11.Corleone"
         >
           <IconBrandYoutube />
+        </SocialMedia>{" "}
+        <SocialMedia
+          text="Jedlik Corleone"
+          link="https://www.facebook.com/profile.php?id=61574730706886"
+        >
+          <IconBrandFacebook />
         </SocialMedia>
       </div>
       <p className="font-light">

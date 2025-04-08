@@ -4,7 +4,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { cx } from "class-variance-authority";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
-import { caveat, geistMono, geistSans, inter, netflix, sfpro } from "./fonts";
+import { caveat, geistMono, geistSans, inter, musicFont, netflix, sfpro } from "./fonts";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -57,6 +57,7 @@ export default function RootLayout({
         geistMono.variable,
         geistSans.variable,
         netflix.variable,
+        musicFont.variable,
         "scroll-smooth subpixel-antialiased"
       )}
       suppressHydrationWarning

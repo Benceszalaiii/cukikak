@@ -1,5 +1,6 @@
 "use server";
 
+import Nav from "@/components/layout/nav";
 import { getUser } from "@/lib/db";
 
 export default async function AdminLayout({
@@ -18,6 +19,7 @@ export default async function AdminLayout({
   // }
   return (
     <section className="w-full h-full min-h-screen bg-neutral-900 [--foreground=0_100%_100%]">
+      <Nav />
       {/* <form action={handleSubmit}>
         <Button className="fixed top-24 left-64" variant={"outline"} type="submit">
           Send test mail

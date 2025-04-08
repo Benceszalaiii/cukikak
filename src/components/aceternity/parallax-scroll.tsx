@@ -1,3 +1,4 @@
+"use client";
 import { deleteImage, restoreImage } from "@/app/gallery/actions";
 import { cn } from "@/lib/utils";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
@@ -31,12 +32,12 @@ interface GridItem extends MasonryItem {
 
 interface MasonryProps {
   data: MasonryItem[];
+  reloadPage: () => void;
   canEdit: boolean;
 }
 
-function Masonry({ data, canEdit }: MasonryProps) {
+function Masonry({ data, canEdit, reloadPage }: MasonryProps) {
   const [columns, setColumns] = useState<number>(2);
-
   useEffect(() => {
     const updateColumns = () => {
       if (window.matchMedia("(min-width: 1500px)").matches) {
@@ -112,6 +113,68 @@ function Masonry({ data, canEdit }: MasonryProps) {
           style={style}
           className="absolute p-[15px] group [will-change:transform,width,height,opacity]"
         >
+          {canEdit &&
+            (!item.isExplicit ? (
+              <X
+                className="absolute top-6 right-6 z-50 cursor-pointer stroke-red-600"
+                onClick={(event) => {
+                  event.currentTarget.classList.add(
+                    "pointer-events-none",
+                    "cursor-not-allowed",
+                    "opacity-50"
+                  );
+
+                  toast.promise(
+                    async () => {
+                      await deleteImage(item.id);
+                      reloadPage();
+                    },
+                    {
+                      loading: "Törlés...",
+                      success: "Kép törölve!",
+                      error: (e) => {
+                        event.currentTarget.classList.remove(
+                          "pointer-events-none",
+                          "cursor-not-allowed",
+                          "opacity-50"
+                        );
+                        return `Hiba történt: ${e}`;
+                      },
+                    }
+                  );
+                }}
+              />
+            ) : (
+              <CheckIcon
+                className="absolute top-6 right-6 z-50 cursor-pointer stroke-green-600"
+                onClick={(event) => {
+                  event.currentTarget.classList.add(
+                    "pointer-events-none",
+                    "cursor-not-allowed",
+                    "opacity-50"
+                  );
+
+                  toast.promise(
+                    async () => {
+                      await restoreImage(item.id);
+                      reloadPage();
+                    },
+                    {
+                      loading: "Visszaállítás...",
+                      success: "Kép visszaállítva!",
+                      error: (e) => {
+                        event.currentTarget.classList.remove(
+                          "pointer-events-none",
+                          "cursor-not-allowed",
+                          "opacity-50"
+                        );
+                        return `Hiba történt: ${e}`;
+                      },
+                    }
+                  );
+                }}
+              />
+            ))}
           <Dialog>
             <DialogTrigger asChild>
               <div
@@ -123,66 +186,12 @@ function Masonry({ data, canEdit }: MasonryProps) {
                   backgroundPosition: "center",
                 }}
               >
-                {canEdit &&
-                  (!item.isExplicit ? (
-                    <X
-                      className="absolute top-2 right-2 z-50 cursor-pointer stroke-red-600"
-                      onClick={(event) => {
-                        event.currentTarget.classList.add(
-                          "pointer-events-none",
-                          "cursor-not-allowed",
-                          "opacity-50"
-                        );
+                {item.isExplicit && (
+                  <div className="absolute w-full h-full z-[20] bg-black/85 font-music flex items-center justify-center text-2xl tracking-widest">
+                    Explicit
+                  </div>
+                )}
 
-                        toast.promise(
-                          async () => {
-                            deleteImage(item.id);
-                          },
-                          {
-                            loading: "Törlés...",
-                            success: "Kép törölve!",
-                            error: (e) => {
-                              event.currentTarget.classList.remove(
-                                "pointer-events-none",
-                                "cursor-not-allowed",
-                                "opacity-50"
-                              );
-                              return `Hiba történt: ${e}`;
-                            },
-                          }
-                        );
-                      }}
-                    />
-                  ) : (
-                    <CheckIcon
-                      className="absolute top-2 right-2 z-50 cursor-pointer stroke-green-600"
-                      onClick={(event) => {
-                        event.currentTarget.classList.add(
-                          "pointer-events-none",
-                          "cursor-not-allowed",
-                          "opacity-50"
-                        );
-
-                        toast.promise(
-                          async () => {
-                            restoreImage(item.id);
-                          },
-                          {
-                            loading: "Visszaállítás...",
-                            success: "Kép visszaállítva!",
-                            error: (e) => {
-                              event.currentTarget.classList.remove(
-                                "pointer-events-none",
-                                "cursor-not-allowed",
-                                "opacity-50"
-                              );
-                              return `Hiba történt: ${e}`;
-                            },
-                          }
-                        );
-                      }}
-                    />
-                  ))}
                 <div
                   className={cn(
                     "bg-gradient-to-t opacity-0 group-hover:opacity-100 ease flex flex-row items-center justify-start pt-4 gap-2 from-neutral-950/90 via-neutral-900/60 via-50% to-transparent p-2 w-full transition-all duration-300 "

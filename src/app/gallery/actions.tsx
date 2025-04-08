@@ -5,6 +5,7 @@ import { getUser } from "@/lib/db";
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
+
 export async function uploadFile(file: File, explicit: boolean) {
   const id = crypto.randomUUID();
   const session = await getUser();
@@ -27,18 +28,19 @@ export async function uploadFile(file: File, explicit: boolean) {
 }
 
 export async function getImages(amount: number, canEdit: boolean) {
-  if (canEdit) {
-    const data = await prisma.publicImage.findMany({
-      include: { postedBy: { select: { name: true, image: true } } },
-      take: amount,
-    });
-    return { data, amount: data.length };
-  }
   const data = await prisma.publicImage.findMany({
     where: { explicit: false },
     include: { postedBy: { select: { name: true, image: true } } },
     take: amount,
   });
+  if (canEdit) {
+    const dataExplicit = await prisma.publicImage.findMany({
+      where: {explicit: true},
+      include: { postedBy: { select: { name: true, image: true } } },
+      take: amount,
+    });
+    data.push(...dataExplicit);
+  }
   return { data, amount: data.length };
 }
 
@@ -47,28 +49,25 @@ export async function deleteImage(id: string) {
   if (!session) {
     return { status: 401, message: "A folytatáshoz jelentkezz be." };
   }
-  if (session.admin && session.role === "STAFF") {
+  if (session.admin || session.role === "STAFF" || session.id === id) {
     await prisma.publicImage.update({
       where: { id: id },
       data: { explicit: true },
     });
-    revalidatePath("/gallery");
+    return revalidatePath("/gallery", "page");
   }
-  return;
 }
-
 
 export async function restoreImage(id: string) {
   const session = await getUser();
   if (!session) {
     return { status: 401, message: "A folytatáshoz jelentkezz be." };
   }
-  if (session.admin && session.role === "STAFF") {
+  if (session.admin || session.role === "STAFF") {
     await prisma.publicImage.update({
       where: { id: id },
       data: { explicit: false },
     });
-    revalidatePath("/gallery");
+    return revalidatePath("/gallery", "page");
   }
-  return;
 }
