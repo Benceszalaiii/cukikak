@@ -6,19 +6,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: baseUrl,
       lastModified: new Date(),
-      changeFrequency: "daily",
       priority: 1,
     },
     {
       url: baseUrl + "timeline",
       lastModified: new Date(),
-      changeFrequency: "hourly",
       priority: 0.7,
     },
     {
       url: baseUrl + "movie",
       lastModified: new Date(),
-      changeFrequency: "daily",
       priority: 0.8,
     },
   ];
