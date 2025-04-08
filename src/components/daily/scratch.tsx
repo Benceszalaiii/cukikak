@@ -26,7 +26,7 @@ export default function ScratchCard({
   }, [scratchCount, data.prize]);
   return (
     <>
-      <section className="flex flex-col lg:flex-row gap-12 items-center justify-center py-24 w-full ">
+      <section className="flex flex-col min-h-[90vh] lg:flex-row gap-12 items-center justify-center py-24 w-full ">
         {icons.map((icon, index) => {
           return (
             <ScratchToReveal
@@ -46,6 +46,11 @@ export default function ScratchCard({
           );
         })}
       </section>
+      <div className="flex pb-16 text-neutral-400/85 font-semibold flex-col items-center w-full justify-center flex-wrap gap-2">
+        <div className="">Kliens mag (Client seed): {data.clientSeed}</div>
+        <div className="">Hash: {data.seed}</div>
+        <div>Provably fair ☑️</div>
+      </div>
     </>
   );
 }

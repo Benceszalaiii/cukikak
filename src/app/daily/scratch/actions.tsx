@@ -18,8 +18,9 @@ export async function getScratch() {
   if (check) {
     return check;
   }
-  const prevNonce = Math.max(...scratches.map((scratch) => scratch.nonce));
-  const nonce = (Math.abs(prevNonce) === Infinity ? 0 : prevNonce) + 1;
+  const nonceUUID = crypto.randomUUID();
+  const nonce =
+    parseInt(createHash("sha256").update(nonceUUID).digest("hex")) || Math.floor(Math.random() * 1000000);
   const seed = `Jedlik11Corleone:${user.clientSeed}:${nonce}`;
   const hash = createHash("sha256").update(seed).digest("hex");
   const outcome = parseInt(hash.slice(0, 8), 16);
@@ -63,7 +64,7 @@ export async function getScratch() {
   const scratch = await prisma.scratch.create({
     data: {
       clientSeed: user.clientSeed,
-      nonce: Math.floor(nonce),
+      nonce: nonce,
       seed: seed,
       prize: prize,
       user: { connect: { id: user.id } },
