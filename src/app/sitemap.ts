@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-
+import "server-only";
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://11c.jedlik.eu/";
   return [
