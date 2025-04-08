@@ -46,7 +46,7 @@ export default function Navbar2({
   ];
   return (
     <div className="relative w-full">
-      <Navbar>
+      <Navbar className="z-[99]">
         {/* Desktop Navigation */}
         <NavBody>
           <NavbarLogo />

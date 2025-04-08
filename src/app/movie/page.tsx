@@ -1,7 +1,6 @@
-import Player from "next-video/player";
+import { ShineBorder } from "@/components/magicui/shine-border";
 import Image from "next/image";
 import Link from "next/link";
-import playerTheme from "player.style/notflix/react";
 export const metadata = {
   title: "Film",
 };
@@ -21,15 +20,17 @@ export default function MoviePage() {
           ></Image>
         </Link>
       </div>
-      <div className="w-full h-full flex items-center justify-center max-w-7xl">
-      <Player
-        className="aspect-[2581/1080] flex flex-row w-full h-full items-center justify-center object-center"
-        theme={playerTheme}
-        autoPlay={false}
-        key="video"
-        src={"/trailer.mp4"}
-        />
-        </div>
+      <div className="w-full h-full flex relative overflow-hidden rounded-2xl items-center border mx-4 border-neutral-900 justify-center max-w-7xl">
+        <ShineBorder borderWidth={2} shineColor={["#dc2626", "#991b1b", "#f43f5e"]} />
+        <iframe
+          className="w-full aspect-video max-w-7xl p-1 rounded-xl "
+          frameBorder={0}
+          src="https://www.youtube.com/embed/KHU2eeZn6pk?si=KU3B2s_7iuuLhNCT"
+          allow="accelerometer; fullscreen; clipboard-write; encrypted-media; gyroscope;"
+          referrerPolicy="strict-origin-when-cross-origin"
+          allowFullScreen
+        ></iframe>
+      </div>
     </section>
   );
 }

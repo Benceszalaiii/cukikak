@@ -1,5 +1,4 @@
 import type { Config } from "tailwindcss";
-import { default as flattenColorPalette } from "tailwindcss/lib/util/flattenColorPalette";
 export default {
   darkMode: "class",
   content: [
@@ -9,7 +8,6 @@ export default {
     "./src/lib/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  plugins: [addVariablesForColors],
   theme: {
     extend: {
       colors: {
@@ -72,11 +70,23 @@ export default {
         ripple: "ripple var(--duration,3s) ease calc(var(--i, 0)*.2s) infinite",
         shine: "shine 5s linear infinite",
         gradient: "gradient 8s linear infinite",
+        shine2: "shine2 var(--duration) infinite linear",
       },
       keyframes: {
         shine: {
           "0%": { "background-position": "100%" },
           "100%": { "background-position": "-100%" },
+        },
+        shine2: {
+          "0%": {
+            "background-position": "0% 0%",
+          },
+          "50%": {
+            "background-position": "100% 100%",
+          },
+          to: {
+            "background-position": "0% 0%",
+          },
         },
         gradient: {
           to: {
@@ -95,15 +105,3 @@ export default {
     },
   },
 } satisfies Config;
-
-function addVariablesForColors({ addBase, theme }: any) {
-  return;
-  let allColors = flattenColorPalette(theme("colors"));
-  let newVars = Object.fromEntries(
-    Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
-  );
-
-  addBase({
-    ":root": newVars,
-  });
-}

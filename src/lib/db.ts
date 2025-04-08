@@ -11,7 +11,7 @@ export async function addToClass(userId: string) {
     return;
   }
   const isClassmate = user.name?.includes("11C_");
-  if (isClassmate) {
+  if (isClassmate && user.role === "USER") {
     await prisma.user.update({
       where: { id: userId },
       data: { role: UserRoles.CLASSMATE },
@@ -20,7 +20,7 @@ export async function addToClass(userId: string) {
   const classnames = await prisma.class.findMany();
   const userClassname = classnames.find((x) =>
     user.name?.includes(x.shortTerm || "23C")
-);
+  );
 
   const classUpdated = await prisma.class.update({
     where: { id: userClassname?.id },
