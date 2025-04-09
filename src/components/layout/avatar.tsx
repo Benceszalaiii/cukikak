@@ -42,7 +42,7 @@ interface ItemProp {
 const items: ItemProp[] = [
   {
     name: "Nyereményjáték",
-    path: "/daily",
+    path: "/daily/scratch",
     icon: GiftIcon,
   },
 ];
