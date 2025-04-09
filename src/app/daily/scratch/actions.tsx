@@ -13,7 +13,7 @@ export async function getScratch() {
     where: { userId: user.id },
   });
   const check = scratches.find(
-    (scratch) => scratch.createdAt.getTime() > Date.now() - 24 * 60 * 60 * 1000
+    (scratch) => scratch.createdAt.getTime() > Date.now() - 4 * 60 * 60 * 1000
   );
   if (check) {
     return check;
