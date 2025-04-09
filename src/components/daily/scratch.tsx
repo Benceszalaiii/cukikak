@@ -1,32 +1,28 @@
 "use client";
 import { Scratch } from "@prisma/client";
 import { useEffect, useState } from "react";
+import Countdown from "react-countdown";
 import { toast } from "sonner";
 import { ScratchToReveal } from "../magicui/scratch-to-reveal";
-
-export default function ScratchCard({
-  data,
-}: {
-  data: Scratch;
-}) {
-    const icons = data.result;
+import Counter from "./counter";
+export default function ScratchCard({ data }: { data: Scratch }) {
+  const icons = data.result;
   const [scratchCount, setScratchCount] = useState(data.scratched?.length || 0);
   const handleScratchComplete = () => {
     setScratchCount(scratchCount + 1);
   };
   useEffect(() => {
     if (scratchCount >= 3) {
-      if (data.prize > 0){
-
+      if (data.prize > 0) {
         toast.success(`Gratulálunk! Nyertél ${data.prize} Jedlik Coint!`);
-      }else{
+      } else {
         toast.error("Sajnos nem nyertél semmit. Térj vissza holnap!");
       }
     }
   }, [scratchCount, data.prize]);
   return (
     <>
-      <section className="flex flex-col min-h-[90vh] lg:flex-row gap-12 items-center justify-center py-24 w-full ">
+      <section className="flex flex-col min-h-[75vh] lg:flex-row gap-12 items-center justify-center pt-24 w-full ">
         {icons.map((icon, index) => {
           return (
             <ScratchToReveal
@@ -46,7 +42,58 @@ export default function ScratchCard({
           );
         })}
       </section>
-      <div className="flex pb-16 text-neutral-400/85 font-semibold flex-col items-center w-full justify-center flex-wrap gap-2">
+      <div
+        suppressHydrationWarning
+        className="w-full flex flex-row items-start justify-center h-32"
+      >
+        <Countdown
+          date={data.createdAt.getTime() + 4 * 60 * 60 * 1000}
+          renderer={({ hours, minutes, seconds, completed }) => {
+            if (completed) {
+              return (
+                <div className="text-2xl text-neutral-400/85 font-semibold">
+                  A sorsjegyed készen áll! Frissítsd az oldalt, hogy újra
+                  játszhass!
+                </div>
+              );
+            } else {
+              return (
+                <div className="w-full h-32 my-12 items-center flex justify-center gap-4 flex-col">
+                  <span className="text-2xl md:text-4xl text-neutral-400/85 justify-self-start">
+                    Következő sorsjegyig:{" "}
+                  </span>
+                  <div
+                    suppressHydrationWarning
+                    className="flex flex-row items-center justify-center font-mono font-semibold"
+                  >
+                    <Counter
+                      gradientFrom="transparent"
+                      fontSize={70}
+                      value={hours}
+                      places={[10, 1]}
+                    />
+                    <span className="text-2xl md:text-4xl">:</span>
+                    <Counter
+                      gradientFrom="transparent"
+                      fontSize={70}
+                      value={minutes}
+                      places={[10, 1]}
+                    />
+                    <span className="text-2xl md:text-4xl">:</span>
+                    <Counter
+                      gradientFrom="transparent"
+                      fontSize={70}
+                      value={seconds}
+                      places={[10, 1]}
+                    />
+                  </div>
+                </div>
+              );
+            }
+          }}
+        />
+      </div>
+      <div className="flex pb-16 mt-24 text-center text-neutral-400/85 font-semibold flex-col items-center w-full justify-center flex-wrap gap-2">
         <div className="">Kliens mag (Client seed): {data.clientSeed}</div>
         <div className="">Hash: {data.seed}</div>
         <div>Provably fair ☑️</div>
