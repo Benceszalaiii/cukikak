@@ -24,6 +24,7 @@ import {
   LogOutIcon,
   LucideIcon,
   ShirtIcon,
+  StoreIcon,
 } from "lucide-react";
 import { signOut } from "next-auth/react";
 import * as React from "react";
@@ -45,6 +46,11 @@ const items: ItemProp[] = [
     path: "/daily/scratch",
     icon: GiftIcon,
   },
+  {
+    name: "ɈÇ beváltás",
+    path: "/shop",
+    icon: StoreIcon
+  }
 ];
 const classmateItems = [
   {
@@ -201,7 +207,7 @@ export default function UserAvatar({
           ))}
         {user.admin && (
           <>
-            <Separator />
+            <DropdownMenuSeparator />
             <DropdownItemWithIcon
               key={"Management bombombom"}
               onClick={() => {
@@ -211,9 +217,9 @@ export default function UserAvatar({
             >
               Vezetőség
             </DropdownItemWithIcon>
+            <DropdownMenuSeparator />
           </>
         )}
-        <DropdownMenuSeparator />
         <DropdownItemWithIcon
           onClick={() => {
             signOut();

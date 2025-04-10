@@ -9,4 +9,9 @@ export async function uploadFileS3(file: File, id: string){
     const res =await storage.createFile("67f121170029fe2c7924", id, file);
     return res;
 }
+
+export async function uploadProductImageS3(file: File, id: string){
+  const res = await storage.createFile("67f7a3720004a0d3e889", id, file)
+  return res;
+}
 export { ID } from "appwrite";

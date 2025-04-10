@@ -179,3 +179,12 @@ model Pin {
   winningIndex Int
   chosenIndex  Int?
 }
+
+model Product {
+  id             String @id @default(cuid())
+  name           String
+  cost           Int
+  imageUrl       String
+  availableCount Int
+  allCount       Int
+}

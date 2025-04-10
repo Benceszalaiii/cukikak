@@ -36,8 +36,7 @@ export async function getImages(amount: number, canEdit: boolean) {
   if (canEdit) {
     const dataExplicit = await prisma.publicImage.findMany({
       where: {explicit: true},
-      include: { postedBy: { select: { name: true, image: true } } },
-      take: amount,
+      include: { postedBy: { select: { name: true, image: true } } }
     });
     data.push(...dataExplicit);
   }
