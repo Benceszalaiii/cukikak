@@ -1,10 +1,19 @@
 import Footer from "@/components/layout/footer";
 import { Toaster } from "@/components/ui/sonner";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { cx } from "class-variance-authority";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
-import { caveat, geistMono, geistSans, inter, musicFont, netflix, sfpro } from "./fonts";
+import {
+  caveat,
+  geistMono,
+  geistSans,
+  inter,
+  musicFont,
+  netflix,
+  sfpro,
+} from "./fonts";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -69,6 +78,7 @@ export default function RootLayout({
         <ThemeProvider attribute={"class"} forcedTheme="dark">
           <Toaster />
           <Analytics />
+          <SpeedInsights />
           <main className="min-h-screen w-full bg-black selection:bg-red-600 selection:text-black">
             {children}
           </main>
