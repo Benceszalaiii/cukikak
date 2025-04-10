@@ -27,7 +27,7 @@ export default function ScratchCard({ data }: { data: Scratch }) {
           return (
             <ScratchToReveal
               minScratchPercentage={69}
-              key={icon + index}
+              key={index}
               height={250}
               width={200}
               onComplete={handleScratchComplete}

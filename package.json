@@ -57,6 +57,7 @@
     "next-auth": "^5.0.0-beta.25",
     "next-themes": "^0.4.4",
     "next-video": "^2.1.0",
+    "node-appwrite": "^15.0.1",
     "nsfw-filter": "^1.0.4",
     "ogl": "^1.0.11",
     "prisma": "^6.6.0",
