@@ -24,7 +24,7 @@ export async function getScratch() {
   const seed = `Jedlik11Corleone:${user.clientSeed}:${nonce}`;
   const hash = createHash("sha256").update(seed).digest("hex");
   const outcome = parseInt(hash.slice(0, 8), 16);
-  const prize = outcome % 15 === 0 ? 3 : 0;
+  const prize = outcome % 15 === 0 ? 15000 : 0;
   function getEmoji(emojis?: string[]) {
     if (!emojis) {
       return ["🎰", "💸", "🎲", "🃏", "🤑", "🔫", "💼", "👑", "🕴️", "🪙"][
