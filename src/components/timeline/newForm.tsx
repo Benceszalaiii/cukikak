@@ -54,7 +54,7 @@ export enum FormStatus {
 }
 
 const formSchema = z.object({
-  title: z.string().min(2).max(16),
+  title: z.string().min(2).max(32),
   date: z.coerce.date(),
   tags: z.array(z.string()).nonempty("Válassz legalább egy elemet").optional(),
   access_level: z.enum(["USER", "CLASSMATE", "TEACHER", "STAFF"]),
