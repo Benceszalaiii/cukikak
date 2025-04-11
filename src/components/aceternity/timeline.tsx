@@ -1,11 +1,11 @@
 "use client";
 import { TimelinePropWithUserData } from "@/app/timeline/page";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { CheckCheckIcon } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
+import { twMerge } from "tailwind-merge";
 import { CreateEntry } from "../timeline";
 import Entry from "../timeline/entry";
-import { CheckCheckIcon } from "lucide-react";
-import { twMerge } from "tailwind-merge";
 
 export interface TimelineEntryProps {
   title: string;
@@ -25,7 +25,7 @@ export const Timeline = ({
   const ref = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState(0);
-  
+
   const [filtered, SetFiltered] = useState(false);
   useEffect(() => {
     if (ref.current) {
@@ -48,19 +48,23 @@ export const Timeline = ({
     target: containerRef,
     offset: ["start 10%", "end 50%"],
   });
-  const heightTransform =  useTransform(scrollYProgress, [0, 1], [0, height]);
+  const heightTransform = useTransform(scrollYProgress, [0, 1], [0, height]);
   const opacityTransform = useTransform(scrollYProgress, [0, 0.1], [0, 1]);
   const [entries, SetEntries] = useState(originalEntries);
 
-  useEffect(()=> {
+  useEffect(() => {
     if (filtered) {
-      SetEntries(originalEntries.filter((entry) => entry.attendantsIds.some((attendant) => attendant === userId)));
+      SetEntries(
+        originalEntries.filter((entry) =>
+          entry.attendantsIds.some((attendant) => attendant === userId)
+        )
+      );
     } else {
       SetEntries(originalEntries);
     }
     // Kedves eslint, en jobban ertem mint te, ugyhogy ne szolj bele a munkamba te kis szemet geci fasz buzi  //?(Ez az egesz sor copilot altal generalt)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filtered])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filtered]);
   return (
     <div
       className="w-full overflow-y-hidden h-fit font-geistmono lg:px-10"
@@ -75,13 +79,19 @@ export const Timeline = ({
           és az előkészületek dátumát.
         </p>
       </div>
-        {userId && (
-          <button onClick={()=> {
+      {canAdd && (
+        <button
+          onClick={() => {
             SetFiltered(!filtered);
-          }} className="underline w-full h-4 text-end items-center pr-24 justify-end text-sm text-red-700 flex flex-row gap-2 hover:text-red-500 underline-offset-2 hover:underline-offset-4 transition-all duration-300 font-semibold ">
-            {filtered && <CheckCheckIcon className="transition-all duration-300 motion-preset-blur-left-md" />} Csak azokat az eseményeket mutassa, ahol résztvevő vagyok 
-          </button>
-        )}
+          }}
+          className="underline w-full h-4 text-end items-center pr-24 justify-end text-sm text-red-700 flex flex-row gap-2 hover:text-red-500 underline-offset-2 hover:underline-offset-4 transition-all duration-300 font-semibold "
+        >
+          {filtered && (
+            <CheckCheckIcon className="transition-all duration-300 motion-preset-blur-left-md" />
+          )}{" "}
+          Csak azokat az eseményeket mutassa, ahol résztvevő vagyok
+        </button>
+      )}
 
       <div ref={ref} className="relative max-w-7xl mx-auto pb-20">
         {canAdd && <CreateEntry />}
@@ -100,7 +110,7 @@ export const Timeline = ({
             </div>
 
             <div className="relative pl-20 pr-4 lg:pl-4 w-full">
-              <h3 className="md:hidden block text-lg mb-4 text-left font-bold text-neutral-500 dark:text-neutral-300">
+              <h3 className="md:hidden block break-words whitespace-normal text-base mb-4 text-left font-light text-neutral-500 dark:text-neutral-300">
                 {item.title}
               </h3>
               {item.description}
@@ -119,7 +129,10 @@ export const Timeline = ({
               height: heightTransform,
               opacity: opacityTransform,
             }}
-            className={twMerge("absolute inset-x-0 top-0 w-[2px] bg-gradient-to-t from-transparent  to-transparent from-[0%] via-[20%] rounded-full", filtered ? "via-emerald-600" : "via-red-600")}
+            className={twMerge(
+              "absolute inset-x-0 top-0 w-[2px] bg-gradient-to-t from-transparent  to-transparent from-[0%] via-[20%] rounded-full",
+              filtered ? "via-emerald-600" : "via-red-600"
+            )}
           />
         </div>
       </div>

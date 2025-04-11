@@ -11,7 +11,7 @@ export default function Entry({ data }: { data: TimelinePropWithUserData }) {
       {
         //* SECTION FOR TITLE AND CREATOR
       }
-      <div className=" text-start truncate max-w-full flex  font-semibold text-neutral-50 tracking-wider text-2xl">
+      <div className=" text-start max-w-full flex font-semibold text-neutral-50 tracking-wider text-xl md:text-2xl">
         <h3 title={data.title}>{data.title}</h3>
       </div>
       <div className=" pl-4 text-neutral-300 w-full justify-end items-center gap-2 flex">
