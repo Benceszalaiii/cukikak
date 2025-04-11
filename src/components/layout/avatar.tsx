@@ -98,7 +98,7 @@ export default function UserAvatar({
             </button>
           </AnimatedGradientText>
         </DrawerTrigger>
-        <DrawerContent className="w-full bg-black border-gray-500/25 border">
+        <DrawerContent className="w-full z-[100] bg-black border-gray-500/25 border">
           <DrawerHeader>
             <DrawerTitle>{user.name}</DrawerTitle>
           </DrawerHeader>
@@ -176,7 +176,7 @@ export default function UserAvatar({
           </button>
         </AnimatedGradientText>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-48 space-y-1 border">
+      <DropdownMenuContent align="end" className="w-48 space-y-1 border z-[100]">
         <div className="p-2">
           <h2 className="">{user.name}</h2>
         </div>

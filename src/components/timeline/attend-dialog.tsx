@@ -1,6 +1,12 @@
 import { TimelinePropWithUserData } from "@/app/timeline/page";
 import { AvatarCircles, AvatarProps } from "../magicui/avatar-circles";
-import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from "../ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+} from "../ui/dialog";
 import { ScrollArea } from "../ui/scroll-area";
 
 export default function AttendanceDialog({
@@ -16,26 +22,27 @@ export default function AttendanceDialog({
       <DialogTrigger>
         <AvatarCircles avatarUrls={urls} numPeople={users.attendants.length} />
       </DialogTrigger>
-      <DialogContent><DialogTitle>Esemény résztvevői</DialogTitle>
-      <DialogDescription asChild>
-        <ScrollArea>
+      <DialogContent>
+        <DialogTitle>Esemény szervezői</DialogTitle>
+        <DialogDescription asChild>
+          <ScrollArea>
             {users.attendants.map((user) => {
-                return (
+              return (
                 <div key={user.name} className="flex items-center gap-4">
-                    <AvatarCircles
+                  <AvatarCircles
                     avatarUrls={[
-                        {
+                      {
                         name: user.name || "No name",
                         image: user.image || null,
-                        },
+                      },
                     ]}
-                    />
-                    <p>{user.name}</p>
+                  />
+                  <p>{user.name}</p>
                 </div>
-                );
+              );
             })}
-        </ScrollArea>
-      </DialogDescription>
+          </ScrollArea>
+        </DialogDescription>
       </DialogContent>
     </Dialog>
   );

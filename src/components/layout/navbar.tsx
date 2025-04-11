@@ -53,7 +53,10 @@ export default function Navbar2({
           <NavItems items={navItems} />
           <div className="flex items-center gap-4">
             {session ? (
-              <UserAvatar classmate={classmate} user={session} />
+                <>
+                <p className="text-sm font-mono">{session.coins},00 ɈÇ</p>
+                <UserAvatar classmate={classmate} user={session} />
+                </>
             ) : (
               <SignInButton />
             )}
@@ -86,7 +89,10 @@ export default function Navbar2({
             ))}
             <div className="flex w-full flex-col gap-4">
               {session ? (
+                <div className="flex flex-row w-full gap-4 items-center">
                 <UserAvatar classmate={classmate} user={session} />
+                <p className="text-sm font-geistmono">{session.coins},00 ɈÇ</p>
+                </div>
               ) : (
                 <SignInButton />
               )}
