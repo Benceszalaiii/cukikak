@@ -13,8 +13,8 @@ import { DotsVerticalIcon } from "@radix-ui/react-icons";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDownIcon } from "lucide-react";
 import { toast } from "sonner";
-import { setRole } from "../actions";
-import { UserWithClass } from "../page";
+import { setRole } from "../../app/admin/actions";
+import { UserWithClass } from "../../app/admin/page";
 
 export const columns: ColumnDef<UserWithClass>[] = [
   {

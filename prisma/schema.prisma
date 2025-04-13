@@ -82,6 +82,7 @@ model User {
   Scratch         Scratch[]
   Pin             Pin[]
   Transaction     Transaction[]
+  MovieLink       MovieLink[]
 }
 
 enum UserRoles {
@@ -203,4 +204,11 @@ model Transaction {
   handlerId String
   createdAt DateTime        @default(now())
   User      User            @relation(fields: [userId], references: [id])
+}
+
+model MovieLink {
+  id         Int    @id @default(autoincrement())
+  uploadedBy User   @relation(fields: [userId], references: [id])
+  userId     String
+  href       String
 }

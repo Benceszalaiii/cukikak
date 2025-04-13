@@ -1,7 +1,13 @@
 "use server";
 import ScratchCard from "@/components/daily/scratch";
 import { getScratch } from "./actions";
-
+import { Metadata } from "next";
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "Sorsjegy",
+    description: "Kaparj 4 óránként egy sorsjegyet, és nyerj 15.000ɈÇ-t!",
+  }
+}
 export default async function ScratchPage() {
   const data = await getScratch();
   if (!data) {

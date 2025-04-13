@@ -1,12 +1,12 @@
 "use server";
 import "server-only";
 
+import { columns } from "@/components/admin/columns";
+import { DataTable } from "@/components/admin/data-table";
 import { getAllUsers } from "@/lib/db";
 import { Class, User } from "@prisma/client";
 import { Metadata } from "next";
 import { Suspense } from "react";
-import { columns } from "./@users/columns";
-import { DataTable } from "./@users/data-table";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {

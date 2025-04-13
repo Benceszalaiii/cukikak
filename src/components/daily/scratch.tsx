@@ -16,10 +16,12 @@ export default function ScratchCard({ data }: { data: Scratch }) {
       if (data.prize > 0) {
         toast.success(`Gratulálunk! Nyertél ${data.prize} Jedlik Coint!`);
       } else {
-        toast.error("Sajnos nem nyertél semmit. Térj vissza holnap!");
+        toast.error(
+          `Sajnos nem nyertél semmit. Térj vissza később!`
+        );
       }
     }
-  }, [scratchCount, data.prize]);
+  }, [scratchCount, data.prize, data.createdAt]);
   return (
     <>
       <section className="flex flex-col min-h-[75vh] lg:flex-row gap-12 items-center justify-center pt-24 w-full ">
