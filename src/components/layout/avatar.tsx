@@ -18,6 +18,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 import { User } from "@prisma/client";
 import {
+  CoinsIcon,
   DatabaseIcon,
   FilePlusIcon,
   GiftIcon,
@@ -49,8 +50,8 @@ const items: ItemProp[] = [
   {
     name: "ɈÇ beváltás",
     path: "/shop",
-    icon: StoreIcon
-  }
+    icon: StoreIcon,
+  },
 ];
 const classmateItems = [
   {
@@ -62,6 +63,19 @@ const classmateItems = [
     name: "Pólóméret",
     path: "/11c/shirt",
     icon: ShirtIcon,
+  },
+];
+
+const adminItems = [
+  {
+    name: "Vezetőség",
+    path: "/admin",
+    icon: DatabaseIcon,
+  },
+  {
+    name: "Osztálykincstár",
+    path: "/admin/manage",
+    icon: CoinsIcon,
   },
 ];
 
@@ -132,15 +146,18 @@ export default function UserAvatar({
             {user.admin && (
               <>
                 <Separator />
-                <DrawerItemWithIcon
-                  key={"Management bombombom"}
-                  onClick={() => {
-                    redirectTo("/admin");
-                  }}
-                  Icon={DatabaseIcon}
-                >
-                  Vezetőség
-                </DrawerItemWithIcon>
+                {adminItems.map((item) => (
+                  <DrawerItemWithIcon
+                    key={item.path}
+                    onClick={() => {
+                      redirectTo(item.path);
+                    }}
+                    Icon={item.icon}
+                  >
+                    {item.name}
+                  </DrawerItemWithIcon>
+                ))}
+                <Separator />
               </>
             )}
             <DrawerItemWithIcon
@@ -176,7 +193,10 @@ export default function UserAvatar({
           </button>
         </AnimatedGradientText>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-48 space-y-1 border z-[100]">
+      <DropdownMenuContent
+        align="end"
+        className="w-48 space-y-1 border z-[100]"
+      >
         <div className="p-2">
           <h2 className="">{user.name}</h2>
         </div>
@@ -208,15 +228,18 @@ export default function UserAvatar({
         {user.admin && (
           <>
             <DropdownMenuSeparator />
-            <DropdownItemWithIcon
-              key={"Management bombombom"}
+            {
+
+             adminItems.map((item) => ( <DropdownItemWithIcon
+              key={item.path}
               onClick={() => {
-                redirectTo("/admin");
+                redirectTo(item.path);
               }}
-              Icon={DatabaseIcon}
-            >
-              Vezetőség
+              Icon={item.icon}
+              >
+              {item.name}
             </DropdownItemWithIcon>
+            ))}
             <DropdownMenuSeparator />
           </>
         )}

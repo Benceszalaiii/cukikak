@@ -5,8 +5,8 @@ import { getAllUsers } from "@/lib/db";
 import { Class, User } from "@prisma/client";
 import { Metadata } from "next";
 import { Suspense } from "react";
-import { columns } from "./columns";
-import { DataTable } from "./data-table";
+import { columns } from "./@users/columns";
+import { DataTable } from "./@users/data-table";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {

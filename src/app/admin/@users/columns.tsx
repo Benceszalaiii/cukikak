@@ -14,7 +14,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDownIcon } from "lucide-react";
 import { toast } from "sonner";
 import { setRole } from "../actions";
-import { UserWithClass } from "./page";
+import { UserWithClass } from "../page";
 
 export const columns: ColumnDef<UserWithClass>[] = [
   {
@@ -32,7 +32,7 @@ export const columns: ColumnDef<UserWithClass>[] = [
   },
   {
     accessorKey: "Class",
-    sortingFn: (a, b)=> {
+    sortingFn: (a, b) => {
       if (a?.original.Class?.name && b?.original.Class?.name) {
         return a.original.Class?.name.localeCompare(b.original.Class?.name);
       }

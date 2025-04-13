@@ -89,7 +89,7 @@ export const Timeline = ({
           {filtered && (
             <CheckCheckIcon className="transition-all duration-300 motion-preset-blur-left-md" />
           )}{" "}
-          Csak azokat az eseményeket mutassa, ahol résztvevő vagyok
+          Csak azokat az eseményeket mutassa, ahol szervező vagyok
         </button>
       )}
 

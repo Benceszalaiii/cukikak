@@ -9,7 +9,13 @@ import {
 import { getUser } from "@/lib/db";
 import { cn } from "@/lib/utils";
 import { ImageUp } from "lucide-react";
-
+import { Metadata } from "next";
+export async function generateMetadata(): Promise<Metadata> {
+    return {
+      title: "Galéria",
+      description: "Képek, mémek, rajzok, emlékek",
+    }
+}
 export default async function Page() {
   const user = await getUser();
   return (

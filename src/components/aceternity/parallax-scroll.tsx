@@ -180,14 +180,14 @@ function Masonry({ data, canEdit, reloadPage }: MasonryProps) {
               <div
                 className="relative w-full h-full overflow-hidden hover:border flex items-end uppercase text-[10px] leading-[10px] rounded-[4px] shadow-[0px_10px_50px_-10px_rgba(0,0,0,0.2)] transition duration-300 ease hover:scale-110"
                 style={{
-                  backgroundColor: "#ffffff",
+                  backgroundColor: "#696969",
                   backgroundImage: `url(${item.image})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                 }}
               >
                 {item.isExplicit && (
-                  <div className="absolute w-full h-full z-[20] bg-black/85 font-music flex items-center justify-center text-2xl tracking-widest">
+                  <div className="absolute w-full h-full z-[20] bg-black/50 font-music flex items-center justify-center text-2xl tracking-widest">
                     Explicit
                   </div>
                 )}
