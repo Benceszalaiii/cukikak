@@ -64,49 +64,52 @@ export default async function ProductCard({
           title="Jedlik Coin"
         >
           {data.cost},00 ɈÇ
-          <Dialog>
-            <DialogTrigger asChild>
-              <Edit3Icon className="cursor-pointer" />
-            </DialogTrigger>
-            <DialogContent>
-              <DialogTitle>{data.name} árának megváltoztatása</DialogTitle>
-              <Form
-                action={changePrice}
-                className="flex flex-col items-start gap-4 justify-evenly"
-              >
-                <p className="font-semibold text-lg mb-2">
-                  Jelenlegi ár: {data.cost},00 ɈÇ
-                </p>
-                <Label htmlFor="newPrice">Új ár</Label>
-                <Input
-                  name="newPrice"
-                  defaultValue={data.cost}
-                  id="newPrice"
-                  type="text"
-                ></Input>
-                <Label htmlFor="count">Elérhető darabszám</Label>
-                <Input
-                  name="count"
-                  id="count"
-                  type="number"
-                  defaultValue={data.availableCount}
-                ></Input>
-                <Label htmlFor="allCount">Összes darabszám</Label>
-                <Input
-                  name="allCount"
-                  id="allCount"
-                  defaultValue={data.allCount}
-                  type="number"
-                ></Input>
-                <Button type="submit">Megváltoztatás</Button>
-              </Form>
-              <Form action={deleteProductAction}>
-                <Button type="submit" variant={"destructive"}>
-                  Törlés
-                </Button>
-              </Form>
-            </DialogContent>
-          </Dialog>
+          {session?.admin ||
+            (session?.role === "STAFF" && (
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Edit3Icon className="cursor-pointer" />
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogTitle>{data.name} árának megváltoztatása</DialogTitle>
+                  <Form
+                    action={changePrice}
+                    className="flex flex-col items-start gap-4 justify-evenly"
+                  >
+                    <p className="font-semibold text-lg mb-2">
+                      Jelenlegi ár: {data.cost},00 ɈÇ
+                    </p>
+                    <Label htmlFor="newPrice">Új ár</Label>
+                    <Input
+                      name="newPrice"
+                      defaultValue={data.cost}
+                      id="newPrice"
+                      type="text"
+                    ></Input>
+                    <Label htmlFor="count">Elérhető darabszám</Label>
+                    <Input
+                      name="count"
+                      id="count"
+                      type="number"
+                      defaultValue={data.availableCount}
+                    ></Input>
+                    <Label htmlFor="allCount">Összes darabszám</Label>
+                    <Input
+                      name="allCount"
+                      id="allCount"
+                      defaultValue={data.allCount}
+                      type="number"
+                    ></Input>
+                    <Button type="submit">Megváltoztatás</Button>
+                  </Form>
+                  <Form action={deleteProductAction}>
+                    <Button type="submit" variant={"destructive"}>
+                      Törlés
+                    </Button>
+                  </Form>
+                </DialogContent>
+              </Dialog>
+            ))}
         </div>
         <p className="text-sm text-neutral-300/85">
           Elérhető: {data.availableCount}/{data.allCount}
