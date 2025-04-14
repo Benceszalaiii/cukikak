@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "prisma generate --no-engine && next dev --turbopack",
+    "dev": "prisma generate --no-engine --no-hints && next dev --turbopack",
     "build": "prisma generate --no-engine && prisma db push && next build",
     "format:write": "prettier --write \"**/*.{css,js,json,jsx,ts,tsx}\"",
     "format": "prettier \"**/*.{css,js,json,jsx,ts,tsx}\"",

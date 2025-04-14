@@ -3,10 +3,10 @@
 import ProductCard from "@/components/shop/card";
 import { Button } from "@/components/ui/button";
 import {
-    Dialog,
-    DialogContent,
-    DialogTitle,
-    DialogTrigger,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -45,7 +45,7 @@ export default async function Page() {
     <main className="py-24 w-full min-h-screen">
       <section className="flex flex-wrap w-full px-8 gap-4 p-4">
         {products.map((item, index) => {
-          return <ProductCard session={user} data={item} key={index} />;
+          return <ProductCard data={item} key={index} />;
         })}
         {(user?.admin || user?.role === "STAFF") && (
           <Dialog>
