@@ -2,7 +2,8 @@
 
 import { changeProductPricing, deleteProduct } from "@/app/shop/actions";
 import { Input } from "@/components/ui/input";
-import { Product, User } from "@prisma/client";
+import { getUser } from "@/lib/db";
+import { Product } from "@prisma/client";
 import { Edit3Icon } from "lucide-react";
 import { revalidatePath } from "next/cache";
 import Form from "next/form";
@@ -16,19 +17,14 @@ import {
 } from "../ui/dialog";
 import { Label } from "../ui/label";
 
-export default async function ProductCard({
-  data,
-  session,
-}: {
-  data: Product;
-  session: User | null;
-}) {
+export default async function ProductCard({ data }: { data: Product }) {
+  const session = await getUser();
   async function changePrice(formData: FormData) {
     "use server";
     const price = parseInt(formData.get("newPrice") as string);
     const count = parseInt(formData.get("count") as string);
     const allCount = parseInt(formData.get("allCount") as string);
-    if (session?.admin || session?.role === "STAFF") {
+    if (session?.admin) {
       await changeProductPricing({
         allCount: allCount,
         count: count,
@@ -64,52 +60,51 @@ export default async function ProductCard({
           title="Jedlik Coin"
         >
           {data.cost},00 ɈÇ
-          {session?.admin ||
-            (session?.role === "STAFF" && (
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Edit3Icon className="cursor-pointer" />
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogTitle>{data.name} árának megváltoztatása</DialogTitle>
-                  <Form
-                    action={changePrice}
-                    className="flex flex-col items-start gap-4 justify-evenly"
-                  >
-                    <p className="font-semibold text-lg mb-2">
-                      Jelenlegi ár: {data.cost},00 ɈÇ
-                    </p>
-                    <Label htmlFor="newPrice">Új ár</Label>
-                    <Input
-                      name="newPrice"
-                      defaultValue={data.cost}
-                      id="newPrice"
-                      type="text"
-                    ></Input>
-                    <Label htmlFor="count">Elérhető darabszám</Label>
-                    <Input
-                      name="count"
-                      id="count"
-                      type="number"
-                      defaultValue={data.availableCount}
-                    ></Input>
-                    <Label htmlFor="allCount">Összes darabszám</Label>
-                    <Input
-                      name="allCount"
-                      id="allCount"
-                      defaultValue={data.allCount}
-                      type="number"
-                    ></Input>
-                    <Button type="submit">Megváltoztatás</Button>
-                  </Form>
-                  <Form action={deleteProductAction}>
-                    <Button type="submit" variant={"destructive"}>
-                      Törlés
-                    </Button>
-                  </Form>
-                </DialogContent>
-              </Dialog>
-            ))}
+          {session?.admin && (
+            <Dialog>
+              <DialogTrigger asChild>
+                <Edit3Icon className="cursor-pointer" />
+              </DialogTrigger>
+              <DialogContent>
+                <DialogTitle>{data.name} árának megváltoztatása</DialogTitle>
+                <Form
+                  action={changePrice}
+                  className="flex flex-col items-start gap-4 justify-evenly"
+                >
+                  <p className="font-semibold text-lg mb-2">
+                    Jelenlegi ár: {data.cost},00 ɈÇ
+                  </p>
+                  <Label htmlFor="newPrice">Új ár</Label>
+                  <Input
+                    name="newPrice"
+                    defaultValue={data.cost}
+                    id="newPrice"
+                    type="text"
+                  ></Input>
+                  <Label htmlFor="count">Elérhető darabszám</Label>
+                  <Input
+                    name="count"
+                    id="count"
+                    type="number"
+                    defaultValue={data.availableCount}
+                  ></Input>
+                  <Label htmlFor="allCount">Összes darabszám</Label>
+                  <Input
+                    name="allCount"
+                    id="allCount"
+                    defaultValue={data.allCount}
+                    type="number"
+                  ></Input>
+                  <Button type="submit">Megváltoztatás</Button>
+                </Form>
+                <Form action={deleteProductAction}>
+                  <Button type="submit" variant={"destructive"}>
+                    Törlés
+                  </Button>
+                </Form>
+              </DialogContent>
+            </Dialog>
+          )}
         </div>
         <p className="text-sm text-neutral-300/85">
           Elérhető: {data.availableCount}/{data.allCount}
