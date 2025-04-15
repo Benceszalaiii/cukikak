@@ -38,6 +38,7 @@ export default async function Page(props: { searchParams: SearchParams }) {
   });
   const activeUserId = searchParams.user;
   const active = users.find((user) => user.id === activeUserId);
+  const scratches = await prisma.scratch.findMany({where: {userId: active?.id}});
   async function handleSubmit(formData: FormData) {
     "use server";
     if (!user || !active) {
@@ -102,6 +103,7 @@ export default async function Page(props: { searchParams: SearchParams }) {
               </Button>
             </Form>
           </section>
+          <p>Sorsjegyek száma: {scratches.length}, amiből {scratches.filter((x)=> x.prize > 0).length} szelvény nyert.</p>
         </>
       ) : (
         <h2>Nincs kiválasztva felhasználó</h2>
