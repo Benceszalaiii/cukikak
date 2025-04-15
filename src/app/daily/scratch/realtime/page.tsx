@@ -1,6 +1,6 @@
 "use server";
 
-import Counter from "@/components/daily/counter";
+import CountUp from "@/components/bits/counter";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import prisma from "@/lib/prisma";
 import { cn } from "@/lib/utils";
@@ -18,10 +18,40 @@ export default async function Scratches() {
       },
     },
   });
+  const prizeSum = scratches.reduce((sum, current) => sum + current.prize, 0);
+  console.log(prizeSum);
   return (
-    <section className="w-full min-h-screen flex flex-col gap-24 py-[50vh] items-center justify-center">
-      <Counter gradientFrom="transparent" value={scratches.length} />
-      <div className="flex flex-col gap-4 items-center justify-center">
+    <section className="w-full min-h-screen flex flex-col gap-12 py-[25vh] items-center justify-center">
+      <div className="flex w-full items-center justify-center flex-col gap-4">
+        <h1 className="text-neutral-400/85 font-semibold text-lg font-mono">
+          Lekapart sorsjegyek száma:{" "}
+        </h1>
+        <CountUp
+          delay={0}
+          duration={1.4}
+          separator=" "
+          className="text-7xl font-semibold font-mono text-center"
+          direction={"up"}
+          to={scratches.length}
+        />
+      </div>
+      <div className="flex w-full items-center justify-center flex-col gap-4">
+        <h1 className="text-neutral-400/85 font-semibold text-lg font-mono">
+          Kiosztott ɈÇ száma:{" "}
+        </h1>
+        <CountUp
+          delay={0}
+          duration={1.4}
+          separator=" "
+          className="text-7xl font-semibold font-mono text-center"
+          direction={"up"}
+          to={prizeSum}
+        ></CountUp>
+      </div>
+      <div className="flex mt-12 flex-col gap-4 items-center justify-center">
+        <h1 className="text-neutral-400/85 font-semibold text-lg font-mono">
+          Legfrissebb sorsjegyek: {" "}
+        </h1>
         {scratches.slice(0, 15).map((scratch, index) => (
           <div
             key={index}
