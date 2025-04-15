@@ -10,7 +10,7 @@ export default async function AdminLayout({
 }) {
   const user = await getUser();
   if (!user?.admin) {
-    return <div>Not authorized</div>;
+    return <div>Ehhez az oldalhoz nincs hozzáférésed.</div>;
   }
   return (
     <section className="w-full h-full min-h-screen bg-neutral-900 [--foreground=0_100%_100%]">

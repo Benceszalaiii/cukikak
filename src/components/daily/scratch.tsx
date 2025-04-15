@@ -3,6 +3,7 @@ import { Scratch } from "@prisma/client";
 import { useEffect, useState } from "react";
 import Countdown from "react-countdown";
 import { toast } from "sonner";
+import { NavbarButton } from "../aceternity/nav";
 import { ScratchToReveal } from "../magicui/scratch-to-reveal";
 import Counter from "./counter";
 export default function ScratchCard({ data }: { data: Scratch }) {
@@ -16,9 +17,7 @@ export default function ScratchCard({ data }: { data: Scratch }) {
       if (data.prize > 0) {
         toast.success(`Gratulálunk! Nyertél ${data.prize} Jedlik Coint!`);
       } else {
-        toast.error(
-          `Sajnos nem nyertél semmit. Térj vissza később!`
-        );
+        toast.error(`Sajnos nem nyertél semmit. Térj vissza később!`);
       }
     }
   }, [scratchCount, data.prize, data.createdAt]);
@@ -96,6 +95,9 @@ export default function ScratchCard({ data }: { data: Scratch }) {
         />
       </div>
       <div className="flex pb-16 mt-24 text-center text-neutral-400/85 font-semibold flex-col items-center w-full justify-center flex-wrap gap-2">
+        <NavbarButton href={"/daily/scratch/realtime"} variant="gradient">
+          Nyertesek megtekintése
+        </NavbarButton>
         <div className="">Kliens mag (Client seed): {data.clientSeed}</div>
         <div className="">Hash: {data.seed}</div>
         <div>Provably fair ☑️</div>
