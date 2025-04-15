@@ -19,7 +19,6 @@ export default async function Scratches() {
     },
   });
   const prizeSum = scratches.reduce((sum, current) => sum + current.prize, 0);
-  console.log(prizeSum);
   return (
     <section className="w-full min-h-screen flex flex-col gap-12 py-[25vh] items-center justify-center">
       <div className="flex w-full items-center justify-center flex-col gap-4">
