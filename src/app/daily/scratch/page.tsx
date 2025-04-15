@@ -2,6 +2,8 @@
 import ScratchCard from "@/components/daily/scratch";
 import { getScratch } from "./actions";
 import { Metadata } from "next";
+import { getUser } from '@/lib/db';
+import SignInButton from "@/components/signin";
 export async function generateMetadata(): Promise<Metadata> {
   return {
     title: "Sorsjegy",
@@ -9,6 +11,15 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 export default async function ScratchPage() {
+  const user = await getUser();
+  if (!user){
+    return (
+      <div className="min-h-screen w-full flex-col gap-12 flex items-center justify-center p-4 font-mono text-xl text-red-600 font-semibold">
+      A sorsjegy megtekintéséhez be kell jelentkezned! <br />{" "}
+      <SignInButton/>
+    </div>
+    )
+  }
   const data = await getScratch();
   if (!data) {
     return (
